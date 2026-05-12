@@ -235,10 +235,19 @@ const THINK_OF_YOU_IMAGES = Object.values(
 
 function PhotoGallerySection() {
   const [slideIndex, setSlideIndex] = useState(0);
+  const [isSliding, setIsSliding] = useState(false);
+  const [slideDir, setSlideDir] = useState(0);
+  const [pendingIndex, setPendingIndex] = useState(0);
+  const [trackOffset, setTrackOffset] = useState(0);
+  const [trackTransitionOn, setTrackTransitionOn] = useState(false);
+  const touchStartXRef = useRef(null);
+  const touchDeltaXRef = useRef(0);
   const carouselRef = useRef(null);
   const n = GALLERY_SLIDES.length;
   const safeIndex = ((slideIndex % n) + n) % n;
   const slide = GALLERY_SLIDES[safeIndex];
+  const prevIndex = ((safeIndex - 1 + n) % n + n) % n;
+  const nextIndex = (safeIndex + 1) % n;
 
   useEffect(() => {
     const el = carouselRef.current;
@@ -252,13 +261,71 @@ function PhotoGallerySection() {
     return () => el.removeEventListener("focusout", onFocusOut);
   }, []);
 
+  const startSlide = useCallback(
+    (dir) => {
+      if (isSliding) return;
+      const next = dir > 0 ? nextIndex : prevIndex;
+      setSlideDir(dir);
+      setPendingIndex(next);
+      setIsSliding(true);
+      setTrackTransitionOn(false);
+      setTrackOffset(dir > 0 ? 0 : -50);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setTrackTransitionOn(true);
+          setTrackOffset(dir > 0 ? -50 : 0);
+        });
+      });
+    },
+    [isSliding, nextIndex, prevIndex],
+  );
+
   const goPrev = useCallback(() => {
-    setSlideIndex((i) => i - 1);
-  }, []);
+    startSlide(-1);
+  }, [startSlide]);
 
   const goNext = useCallback(() => {
-    setSlideIndex((i) => i + 1);
+    startSlide(1);
+  }, [startSlide]);
+
+  const onSlideEnd = useCallback(() => {
+    if (!isSliding) return;
+    setSlideIndex(pendingIndex);
+    setIsSliding(false);
+    setTrackTransitionOn(false);
+    setTrackOffset(0);
+  }, [isSliding, pendingIndex]);
+
+  const onTouchStart = useCallback(
+    (e) => {
+      if (isSliding) return;
+      touchStartXRef.current = e.touches[0]?.clientX ?? null;
+      touchDeltaXRef.current = 0;
+    },
+    [isSliding],
+  );
+
+  const onTouchMove = useCallback((e) => {
+    if (touchStartXRef.current == null) return;
+    const x = e.touches[0]?.clientX ?? touchStartXRef.current;
+    touchDeltaXRef.current = x - touchStartXRef.current;
   }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (touchStartXRef.current == null || isSliding) return;
+    const dx = touchDeltaXRef.current;
+    touchStartXRef.current = null;
+    touchDeltaXRef.current = 0;
+    if (Math.abs(dx) < 40) return;
+    if (dx < 0) goNext();
+    if (dx > 0) goPrev();
+  }, [goNext, goPrev, isSliding]);
+
+  const visibleSlides = isSliding
+    ? slideDir > 0
+      ? [safeIndex, pendingIndex]
+      : [pendingIndex, safeIndex]
+    : [safeIndex];
 
   return (
     <Reveal
@@ -294,34 +361,81 @@ function PhotoGallerySection() {
         }}
       >
         <div className="gallery-carousel__row">
-          <button
-            type="button"
-            className="gallery-carousel__arrow gallery-carousel__arrow--prev"
-            onClick={goPrev}
-            aria-label="Previous photo"
+          <figure
+            className="gallery-carousel__figure"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={onTouchEnd}
           >
-            <span aria-hidden="true">‹</span>
-          </button>
-
-          <figure className="gallery-carousel__figure">
-            <img
-              key={slide.src}
-              className="gallery-carousel__img"
-              src={slide.src}
-              alt={slide.alt}
-              loading="lazy"
-              decoding="async"
-            />
+            <div
+              className={`gallery-carousel__track${trackTransitionOn ? " gallery-carousel__track--animating" : ""}`}
+              style={{
+                width: `${visibleSlides.length * 100}%`,
+                transform: `translateX(${trackOffset}%)`,
+              }}
+              onTransitionEnd={onSlideEnd}
+            >
+              {visibleSlides.map((idx) => {
+                const s = GALLERY_SLIDES[idx];
+                return (
+                  <img
+                    key={`${idx}-${s.src}`}
+                    className="gallery-carousel__img"
+                    style={{ width: `${100 / visibleSlides.length}%` }}
+                    src={s.src}
+                    alt={s.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                );
+              })}
+            </div>
+            <button
+              type="button"
+              className="gallery-carousel__arrow gallery-carousel__arrow--prev"
+              onClick={goPrev}
+              aria-label="Previous photo"
+            >
+              <svg
+                className="gallery-carousel__arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M14.5 5.5L8.5 12L14.5 18.5"
+                  stroke="currentColor"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              className="gallery-carousel__arrow gallery-carousel__arrow--next"
+              onClick={goNext}
+              aria-label="Next photo"
+            >
+              <svg
+                className="gallery-carousel__arrow-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.5 5.5L15.5 12L9.5 18.5"
+                  stroke="currentColor"
+                  strokeWidth="2.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </figure>
-
-          <button
-            type="button"
-            className="gallery-carousel__arrow gallery-carousel__arrow--next"
-            onClick={goNext}
-            aria-label="Next photo"
-          >
-            <span aria-hidden="true">›</span>
-          </button>
         </div>
 
         <p className="gallery-carousel__caption" aria-live="polite">
@@ -664,6 +778,7 @@ function App() {
   const [playlistIntroDone, setPlaylistIntroDone] = useState(false);
   const [playlistPopupOpen, setPlaylistPopupOpen] = useState(false);
   const [embedPlaying, setEmbedPlaying] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
     if (!playlistPopupOpen) return;
@@ -685,6 +800,20 @@ function App() {
       document.body.style.overflow = prevBody;
     };
   }, [playlistPopupOpen, playlistIntroDone]);
+
+  useEffect(() => {
+    if (!playlistIntroDone) return;
+    const onScroll = () => {
+      setShowBackToTop(window.scrollY > 520);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [playlistIntroDone]);
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   if (!openingDone) {
     return (
@@ -849,6 +978,20 @@ function App() {
                   </p>
                 </footer>
               </Reveal>
+
+              <Reveal
+                as="section"
+                className="section section--closing-signature"
+                delay={120}
+              >
+                <div className="closing-signature" aria-label="Closing message">
+                  <p className="closing-signature__headline">
+                    Happy Birthday, Cassidy <span aria-hidden="true">💕</span>
+                  </p>
+                  <p className="closing-signature__signoff">Love, Mike</p>
+                  <p className="closing-signature__date">May 16th 2026</p>
+                </div>
+              </Reveal>
             </main>
           </div>
 
@@ -875,6 +1018,17 @@ function App() {
               <span className="music-fab__viz-bar" />
             </span>
           </button>
+
+          {playlistIntroDone && showBackToTop && (
+            <button
+              type="button"
+              className="back-to-top-pill"
+              onClick={scrollToTop}
+              aria-label="Back to top"
+            >
+              ↑ Top
+            </button>
+          )}
         </>
       )}
     </>
