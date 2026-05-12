@@ -1,10 +1,10 @@
 import { memo, useEffect, useRef } from 'react'
 
 /** Playlist shown in the embed — keep in sync with Spotify embed settings. */
-export const SPOTIFY_PLAYLIST_URI = 'spotify:playlist:1lx62RzEtZlqd3SGfiJCtE'
+export const SPOTIFY_PLAYLIST_URI = 'spotify:playlist:7sk1bP2E57vvoH2fqUQ5VA'
 
 const IFRAME_API_SRC = 'https://open.spotify.com/embed/iframe-api/v1'
-const EMBED_HEIGHT = 352
+const EMBED_HEIGHT = 500
 
 /**
  * Spotify’s official embed (iFrame API). Same playlist as before, but we get real
@@ -85,8 +85,8 @@ function SpotifyPlaylistEmbedInner({ onPlaybackChange }) {
       className="spotify-embed-api-host"
       style={{
         width: '100%',
-        minHeight: EMBED_HEIGHT,
-        borderRadius: 12,
+        height: EMBED_HEIGHT,
+        borderRadius: 'inherit',
         overflow: 'hidden',
       }}
     />

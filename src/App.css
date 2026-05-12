@@ -1423,9 +1423,12 @@
   inset: 0;
   z-index: 800;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: clamp(0.75rem, 3vw, 1.5rem);
+  justify-content: space-between;
+  gap: 0.9rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem) clamp(0.9rem, 4vw, 1.75rem)
+    max(calc(env(safe-area-inset-bottom, 0px) + 0.75rem), clamp(0.9rem, 4vw, 1.75rem));
   overflow-y: auto;
   background: radial-gradient(ellipse 120% 80% at 50% 0%, #1a0a14 0%, #060308 55%, #020204 100%);
   transform: none;
@@ -1539,19 +1542,9 @@
   display: block;
 }
 
-/* Gate chrome: middle lets clicks reach iframe below */
-.playlist-gate-ui {
-  position: fixed;
-  inset: 0;
-  z-index: 801;
-  display: flex;
-  flex-direction: column;
-  pointer-events: none;
-}
-
 .playlist-gate-ui__header {
-  pointer-events: auto;
-  padding: clamp(1rem, 4vw, 1.75rem) clamp(1rem, 4vw, 2rem) 1.25rem;
+  width: min(34rem, 100%);
+  padding: clamp(0.25rem, 2vw, 0.75rem) clamp(0.2rem, 1vw, 0.4rem);
   background: linear-gradient(
     to bottom,
     rgba(6, 3, 8, 0.94) 0%,
@@ -1589,15 +1582,9 @@
   color: rgba(255, 230, 245, 0.78);
 }
 
-.playlist-gate-ui__pass {
-  flex: 1 1 min(52vh, 28rem);
-  min-height: 12rem;
-  pointer-events: none;
-}
-
 .playlist-gate-ui__footer {
-  pointer-events: auto;
-  padding: 1rem clamp(1rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2rem);
+  width: min(34rem, 100%);
+  padding: 0.2rem clamp(0.2rem, 1vw, 0.4rem) 0.1rem;
   background: linear-gradient(
     to top,
     rgba(6, 3, 8, 0.96) 0%,
@@ -1610,6 +1597,15 @@
 
 .playlist-gate-ui__cta {
   width: min(22rem, 100%);
+}
+
+.playlist-embed-host--gate .playlist-embed-host__frame {
+  flex: 0 0 auto;
+}
+
+.playlist-embed-host--gate .spotify-embed-api-host {
+  min-height: 500px;
+  height: 500px;
 }
 
 .playlist-modal-backdrop {

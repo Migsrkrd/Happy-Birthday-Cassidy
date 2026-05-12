@@ -236,7 +236,7 @@ function PhotoGallerySection() {
         </span>{' '}
         Us, on film
       </h2>
-      <p className="section__lead">Flip through a few favorites — tap the arrows or use the keyboard when this block is focused.</p>
+      <p className="section__lead">Flip through a few of my favorites</p>
 
       <div
         ref={carouselRef}
@@ -606,46 +606,50 @@ function App() {
         aria-label={playlistIntroDone && playlistPopupOpen ? 'Spotify playlist' : undefined}
       >
         <div className="playlist-embed-host__glow" aria-hidden="true" />
-        {playlistIntroDone && playlistPopupOpen && (
-          <div className="playlist-embed-host__popup-bar">
-            <p className="playlist-embed-host__popup-title">Playlist</p>
-            <button
-              type="button"
-              className="playlist-embed-host__popup-close"
-              onClick={() => setPlaylistPopupOpen(false)}
-              aria-label="Close playlist"
-            >
-              ×
-            </button>
-          </div>
+        {!playlistIntroDone ? (
+          <>
+            <header className="playlist-gate-ui__header">
+              <p className="playlist-gate-ui__eyebrow">Soundtrack</p>
+              <h1 className="playlist-gate-ui__title">Pick a song</h1>
+              <p className="playlist-gate-ui__sub">
+                After you continue, the player hides so the site stays clean. Tap <strong>Music</strong> (bottom
+                left) anytime to open the full playlist — same player, so your song keeps going.
+              </p>
+            </header>
+            <div className="playlist-embed-host__frame">
+              <SpotifyPlaylistEmbed onPlaybackChange={setEmbedPlaying} />
+            </div>
+            <footer className="playlist-gate-ui__footer">
+              <button
+                type="button"
+                className="btn btn--primary playlist-gate-ui__cta"
+                onClick={() => setPlaylistIntroDone(true)}
+              >
+                Continue to the birthday site
+              </button>
+            </footer>
+          </>
+        ) : (
+          <>
+            {playlistPopupOpen && (
+              <div className="playlist-embed-host__popup-bar">
+                <p className="playlist-embed-host__popup-title">Playlist</p>
+                <button
+                  type="button"
+                  className="playlist-embed-host__popup-close"
+                  onClick={() => setPlaylistPopupOpen(false)}
+                  aria-label="Close playlist"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+            <div className="playlist-embed-host__frame">
+              <SpotifyPlaylistEmbed onPlaybackChange={setEmbedPlaying} />
+            </div>
+          </>
         )}
-        <div className="playlist-embed-host__frame">
-          <SpotifyPlaylistEmbed onPlaybackChange={setEmbedPlaying} />
-        </div>
       </div>
-
-      {!playlistIntroDone && (
-        <div className="playlist-gate-ui">
-          <header className="playlist-gate-ui__header">
-            <p className="playlist-gate-ui__eyebrow">Soundtrack</p>
-            <h1 className="playlist-gate-ui__title">Pick a song</h1>
-            <p className="playlist-gate-ui__sub">
-              After you continue, the player hides so the site stays clean. Tap <strong>Music</strong> (bottom
-              left) anytime to open the full playlist — same player, so your song keeps going.
-            </p>
-          </header>
-          <div className="playlist-gate-ui__pass" aria-hidden="true" />
-          <footer className="playlist-gate-ui__footer">
-            <button
-              type="button"
-              className="btn btn--primary playlist-gate-ui__cta"
-              onClick={() => setPlaylistIntroDone(true)}
-            >
-              Continue to the birthday site
-            </button>
-          </footer>
-        </div>
-      )}
 
       {playlistIntroDone && (
         <>

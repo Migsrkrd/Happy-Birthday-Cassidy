@@ -47,7 +47,7 @@
   align-items: center;
   will-change: transform;
   animation-name: opening-balloon-rise;
-  animation-duration: var(--rise-dur, 14s);
+  animation-duration: var(--rise-dur, 9s);
   animation-delay: var(--rise-delay, 0s);
   animation-timing-function: linear;
   animation-iteration-count: infinite;

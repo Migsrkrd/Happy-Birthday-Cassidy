@@ -205,7 +205,7 @@ function Balloons() {
         const rnd = mulberry32(i * 99991 + 42)
         const left = `${(4 + rnd() * 90).toFixed(2)}%`
         const scale = `${(0.58 + rnd() * 0.42).toFixed(3)}`
-        const duration = `${(12.5 + rnd() * 5.5).toFixed(2)}s`
+        const duration = `${(7.5 + rnd() * 4).toFixed(2)}s`
         const delay = `${(rnd() * 2.8).toFixed(2)}s`
         const tiltDelay = `${(rnd() * 1.4).toFixed(2)}s`
         const stringBegin = `${(rnd() * 1.1).toFixed(2)}s`
