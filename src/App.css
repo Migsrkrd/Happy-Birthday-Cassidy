@@ -257,6 +257,49 @@
   transform: scale(1.35) rotate(8deg);
 }
 
+/* Hero quote + profile card */
+.hero-quote-card {
+  margin: clamp(1.1rem, 2.8vw, 1.7rem) auto 0;
+  width: min(34rem, 100%);
+  padding: clamp(0.85rem, 2.8vw, 1.25rem);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 175, 214, 0.48);
+  background: linear-gradient(170deg, rgba(255, 255, 255, 0.84), rgba(255, 237, 248, 0.72));
+  box-shadow: 0 18px 42px rgba(146, 35, 92, 0.18);
+  backdrop-filter: blur(4px);
+}
+
+.hero-quote-card__photo {
+  display: block;
+  width: min(12.5rem, 68vw);
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin: 0 auto 0.9rem;
+  border-radius: 999px;
+  border: 3px solid rgba(255, 186, 223, 0.92);
+  box-shadow: 0 12px 30px rgba(215, 70, 140, 0.26);
+}
+
+.hero-quote-card__quote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.98rem, 2.35vw, 1.12rem);
+  line-height: 1.72;
+  font-weight: 500;
+  color: #55213b;
+  text-wrap: pretty;
+}
+
+.hero-quote-card__author {
+  margin-top: 0.8rem;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  color: #9c2c62;
+}
+
 @keyframes heart-pulse {
   0%,
   100% {
