@@ -1,9 +1,9 @@
 /* ---- App shell & animated backdrop ---- */
 .app {
   position: relative;
+  z-index: 0;
   isolation: isolate;
   min-height: 100svh;
-  overflow-x: hidden;
 }
 
 .app--enter {
@@ -960,5 +960,325 @@
   }
   50% {
     transform: translateY(-6px);
+  }
+}
+
+.app--with-playlist-dock {
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 40rem) {
+  .app--with-playlist-dock {
+    padding-bottom: 5rem;
+  }
+}
+
+/* ---- Persistent Spotify embed (same iframe: gate → main hidden / popup) ---- */
+.playlist-embed-host {
+  position: fixed;
+  transition:
+    inset 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.35s ease,
+    padding 0.35s ease;
+}
+
+.playlist-embed-host__glow {
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 100, 180, 0.12), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(180, 140, 255, 0.1), transparent 40%);
+  animation: playlist-embed-glow 14s ease-in-out infinite alternate;
+}
+
+@keyframes playlist-embed-glow {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.playlist-embed-host--gate {
+  inset: 0;
+  z-index: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  overflow-y: auto;
+  background: radial-gradient(ellipse 120% 80% at 50% 0%, #1a0a14 0%, #060308 55%, #020204 100%);
+  transform: none;
+}
+
+.playlist-embed-host--main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playlist-embed-host--main .playlist-embed-host__glow {
+  display: none;
+}
+
+.playlist-embed-host--main-hidden {
+  inset: auto 0 0 0;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(calc(100% + 2rem));
+  z-index: 180;
+  width: 100%;
+  padding: 0 1rem;
+  justify-content: flex-end;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  /* Off-screen fixed embed must not widen the page scrollable overflow. */
+  overflow: hidden;
+  overflow: clip;
+}
+
+.playlist-embed-host--main-hidden .playlist-embed-host__frame {
+  width: min(28rem, 100%);
+}
+
+.playlist-embed-host--main-popup {
+  inset: 0;
+  top: 0;
+  transform: none;
+  z-index: 450;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: clamp(0.75rem, 3vw, 1.25rem);
+  background: transparent;
+  opacity: 1;
+  pointer-events: none;
+  /* One scroll surface for tall embed + chrome; body is locked while open (see App.jsx). */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.playlist-embed-host--main-popup .playlist-embed-host__frame {
+  pointer-events: auto;
+  width: 100%;
+  max-width: min(28rem, calc(100vw - 2rem));
+}
+
+.playlist-embed-host__popup-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: min(28rem, calc(100vw - 2rem));
+  pointer-events: auto;
+  padding: 0.15rem 0;
+  color: #ffe8f4;
+}
+
+.playlist-embed-host__popup-title {
+  margin: 0;
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.playlist-embed-host__popup-close {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 160, 200, 0.35);
+  border-radius: 0.5rem;
+  background: rgba(40, 12, 28, 0.9);
+  color: #ffe8f4;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.playlist-embed-host__popup-close:hover {
+  background: rgba(60, 20, 40, 0.95);
+}
+
+.playlist-embed-host__frame {
+  position: relative;
+  width: min(28rem, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 180, 220, 0.25);
+}
+
+.playlist-embed-host__frame iframe {
+  display: block;
+}
+
+/* Gate chrome: middle lets clicks reach iframe below */
+.playlist-gate-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 801;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.playlist-gate-ui__header {
+  pointer-events: auto;
+  padding: clamp(1rem, 4vw, 1.75rem) clamp(1rem, 4vw, 2rem) 1.25rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 3, 8, 0.94) 0%,
+    rgba(6, 3, 8, 0.72) 70%,
+    transparent 100%
+  );
+  color: #fff5fb;
+}
+
+.playlist-gate-ui__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 182, 220, 0.65);
+}
+
+.playlist-gate-ui__title {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  color: #ffe8f4;
+}
+
+.playlist-gate-ui__sub {
+  margin: 0;
+  max-width: 32rem;
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(255, 230, 245, 0.78);
+}
+
+.playlist-gate-ui__pass {
+  flex: 1 1 min(52vh, 28rem);
+  min-height: 12rem;
+  pointer-events: none;
+}
+
+.playlist-gate-ui__footer {
+  pointer-events: auto;
+  padding: 1rem clamp(1rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2rem);
+  background: linear-gradient(
+    to top,
+    rgba(6, 3, 8, 0.96) 0%,
+    rgba(6, 3, 8, 0.78) 65%,
+    transparent 100%
+  );
+  display: flex;
+  justify-content: center;
+}
+
+.playlist-gate-ui__cta {
+  width: min(22rem, 100%);
+}
+
+.playlist-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  background: rgba(10, 4, 14, 0.48);
+  backdrop-filter: blur(4px);
+}
+
+/* ---- Music: opens full playlist popup (bottom-left) ---- */
+.music-fab {
+  position: fixed;
+  left: clamp(0.75rem, 3vw, 1.25rem);
+  right: auto;
+  bottom: clamp(0.75rem, 3vw, 1.25rem);
+  z-index: 520;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--font-display, system-ui, sans-serif);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #4a0d2e;
+  background: linear-gradient(135deg, #ffb7d9, #ff8ec4);
+  box-shadow: 0 6px 24px rgba(180, 40, 100, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.music-fab:hover {
+  transform: scale(1.04);
+  box-shadow: 0 10px 28px rgba(180, 40, 100, 0.42);
+}
+
+.music-fab:active {
+  transform: scale(0.98);
+}
+
+.music-fab__viz {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 0.85rem;
+}
+
+.music-fab__viz-bar {
+  width: 3px;
+  height: 6px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scaleY(0.4);
+  transform-origin: bottom center;
+}
+
+.music-fab--beat .music-fab__viz-bar {
+  opacity: 0.9;
+  animation: music-fab-viz 0.42s ease-in-out infinite alternate;
+}
+
+.music-fab--beat .music-fab__viz-bar:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.music-fab--beat .music-fab__viz-bar:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes music-fab-viz {
+  from {
+    transform: scaleY(0.35);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .music-fab--beat .music-fab__viz-bar {
+    animation: none;
+    transform: scaleY(0.65);
+    opacity: 0.75;
   }
 }

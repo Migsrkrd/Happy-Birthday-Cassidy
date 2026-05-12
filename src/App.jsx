@@ -1,28 +1,10 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { OpeningSequence, DEFAULT_LETTER_MESSAGE } from './OpeningSequence.jsx'
+import { SpotifyPlaylistEmbed } from './SpotifyPlaylistEmbed.jsx'
 import './App.css'
 
 /** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
 const LETTER_TO_CASSIDY = DEFAULT_LETTER_MESSAGE
-
-const REASONS = [
-  { emoji: '🌸', text: 'You make ordinary days feel like a soft filter on the world.' },
-  { emoji: '🎀', text: 'Your kindness has zero competition. It wins every time.' },
-  { emoji: '☕', text: 'Even your “just checking in” texts feel like a warm hug.' },
-  { emoji: '🌙', text: 'You’re the cozy end to my chaotic days.' },
-  { emoji: '🧁', text: 'You deserve cake for breakfast and stars with your name on them.' },
-  { emoji: '🦋', text: 'Being around you feels like the first warm day of spring.' },
-  { emoji: '💌', text: 'I’m endlessly lucky I get to cheer for you in this life.' },
-  { emoji: '🎂', text: 'Today is officially: celebrate Cassidy at maximum volume.' },
-]
-
-const WISHES = [
-  'May your year sparkle louder than confetti.',
-  'May every playlist shuffle land on your favorite song.',
-  'May your coffee always be the perfect temperature.',
-  'May plot twists be only the happy kind.',
-  'May you feel as adored as you make everyone else feel.',
-]
 
 function useReveal() {
   const ref = useRef(null)
@@ -90,13 +72,10 @@ function FloatingDecor() {
 
 function App() {
   const [openingDone, setOpeningDone] = useState(false)
-  const [giftOpen, setGiftOpen] = useState(false)
-  const [wishIndex, setWishIndex] = useState(0)
+  const [playlistIntroDone, setPlaylistIntroDone] = useState(false)
+  const [playlistPopupOpen, setPlaylistPopupOpen] = useState(false)
+  const [embedPlaying, setEmbedPlaying] = useState(false)
   const [burst, setBurst] = useState([])
-
-  const cycleWish = useCallback(() => {
-    setWishIndex((i) => (i + 1) % WISHES.length)
-  }, [])
 
   const loveBurst = useCallback(() => {
     const id = Date.now()
@@ -113,6 +92,27 @@ function App() {
     window.setTimeout(() => setBurst([]), 2200)
   }, [])
 
+  useEffect(() => {
+    if (!playlistPopupOpen) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setPlaylistPopupOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [playlistPopupOpen])
+
+  useEffect(() => {
+    if (!playlistPopupOpen || !playlistIntroDone) return
+    const prevHtml = document.documentElement.style.overflow
+    const prevBody = document.body.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.documentElement.style.overflow = prevHtml
+      document.body.style.overflow = prevBody
+    }
+  }, [playlistPopupOpen, playlistIntroDone])
+
   if (!openingDone) {
     return (
       <OpeningSequence
@@ -122,10 +122,71 @@ function App() {
     )
   }
 
+  const embedHostClass = [
+    'playlist-embed-host',
+    !playlistIntroDone ? 'playlist-embed-host--gate' : 'playlist-embed-host--main',
+    playlistIntroDone &&
+      (playlistPopupOpen ? 'playlist-embed-host--main-popup' : 'playlist-embed-host--main-hidden'),
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <div className="app app--enter">
-      <div className="app__bg" aria-hidden="true" />
-      <FloatingDecor />
+    <>
+      <div
+        className={embedHostClass}
+        id="playlist-embed-host"
+        role={playlistIntroDone && playlistPopupOpen ? 'dialog' : undefined}
+        aria-modal={playlistIntroDone && playlistPopupOpen ? true : undefined}
+        aria-label={playlistIntroDone && playlistPopupOpen ? 'Spotify playlist' : undefined}
+      >
+        <div className="playlist-embed-host__glow" aria-hidden="true" />
+        {playlistIntroDone && playlistPopupOpen && (
+          <div className="playlist-embed-host__popup-bar">
+            <p className="playlist-embed-host__popup-title">Playlist</p>
+            <button
+              type="button"
+              className="playlist-embed-host__popup-close"
+              onClick={() => setPlaylistPopupOpen(false)}
+              aria-label="Close playlist"
+            >
+              ×
+            </button>
+          </div>
+        )}
+        <div className="playlist-embed-host__frame">
+          <SpotifyPlaylistEmbed onPlaybackChange={setEmbedPlaying} />
+        </div>
+      </div>
+
+      {!playlistIntroDone && (
+        <div className="playlist-gate-ui">
+          <header className="playlist-gate-ui__header">
+            <p className="playlist-gate-ui__eyebrow">Soundtrack</p>
+            <h1 className="playlist-gate-ui__title">Pick a song</h1>
+            <p className="playlist-gate-ui__sub">
+              After you continue, the player hides so the site stays clean. Tap <strong>Music</strong> (bottom
+              left) anytime to open the full playlist — same player, so your song keeps going.
+            </p>
+          </header>
+          <div className="playlist-gate-ui__pass" aria-hidden="true" />
+          <footer className="playlist-gate-ui__footer">
+            <button
+              type="button"
+              className="btn btn--primary playlist-gate-ui__cta"
+              onClick={() => setPlaylistIntroDone(true)}
+            >
+              Continue to the birthday site
+            </button>
+          </footer>
+        </div>
+      )}
+
+      {playlistIntroDone && (
+        <>
+          <div className={`app app--enter${playlistIntroDone ? ' app--with-playlist-dock' : ''}`}>
+            <div className="app__bg" aria-hidden="true" />
+            <FloatingDecor />
 
       <header className="hero">
         <div className="hero__ribbon" aria-hidden="true">
@@ -133,7 +194,6 @@ function App() {
           <span className="hero__ribbon-dot" />
           <span className="hero__ribbon-dot" />
         </div>
-        <p className="hero__eyebrow animate-pop">Psst… Cassidy…</p>
         <h1 className="hero__title">
           {['Happy', 'Birthday,', 'Cassidy!'].map((word, i) => (
             <span key={word} className="hero__word" style={{ animationDelay: `${200 + i * 140}ms` }}>
@@ -168,92 +228,6 @@ function App() {
       </header>
 
       <main className="main">
-        <Reveal as="section" className="section section--banner">
-          <div className="banner">
-            <span className="banner__icon animate-wiggle">🎉</span>
-            <p className="banner__text">
-              Official decree: you are required to accept compliments, cake, and at least one ridiculous dance
-              break.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal as="section" className="section" delay={80}>
-          <h2 className="section__title">
-            <span className="section__title-icon">✨</span> Reasons you’re wonderful
-          </h2>
-          <p className="section__lead">Hover each card — they get shy and then extra sparkly.</p>
-          <ul className="reason-grid">
-            {REASONS.map((r) => (
-              <li key={r.text} className="reason-card-wrap">
-                <article className="reason-card">
-                  <span className="reason-card__emoji">{r.emoji}</span>
-                  <p className="reason-card__text">{r.text}</p>
-                </article>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        <Reveal as="section" className="section section--split" delay={60}>
-          <div className="gift-panel">
-            <h2 className="section__title">
-              <span className="section__title-icon">🎁</span> A gift for you
-            </h2>
-            <p className="section__lead">Go on — the bow is basically begging to be opened.</p>
-            <button
-              type="button"
-              className={`gift-box ${giftOpen ? 'gift-box--open' : ''}`}
-              onClick={() => setGiftOpen((v) => !v)}
-              aria-expanded={giftOpen}
-            >
-              <span className="gift-box__lid" />
-              <span className="gift-box__bow" />
-              <span className="gift-box__body" />
-              <span className={`gift-box__note ${giftOpen ? 'gift-box__note--show' : ''}`}>
-                Infinite hugs on demand, one very proud partner, and permission to be celebrated loudly.
-              </span>
-            </button>
-          </div>
-
-          <div className="wish-panel">
-            <h2 className="section__title">
-              <span className="section__title-icon">🌟</span> Birthday wishes
-            </h2>
-            <p className="section__lead">Each click pulls a new wish out of the wish-cloud.</p>
-            <div className="wish-cloud">
-              <p className="wish-cloud__text" key={wishIndex}>
-                {WISHES[wishIndex]}
-              </p>
-              <button type="button" className="btn btn--ghost wish-cloud__btn" onClick={cycleWish}>
-                Another wish ✦
-              </button>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal as="section" className="section section--marquee" delay={40}>
-          <div className="marquee" aria-hidden="true">
-            <div className="marquee__track">
-              <span>Cassidy is amazing</span>
-              <span>★</span>
-              <span>Best day ever</span>
-              <span>★</span>
-              <span>More cake please</span>
-              <span>★</span>
-              <span>You’re loved</span>
-              <span>★</span>
-              <span>Cassidy is amazing</span>
-              <span>★</span>
-              <span>Best day ever</span>
-              <span>★</span>
-              <span>More cake please</span>
-              <span>★</span>
-              <span>You’re loved</span>
-              <span>★</span>
-            </div>
-          </div>
-        </Reveal>
 
         <Reveal as="section" className="section section--footer" delay={100}>
           <footer className="footer">
@@ -267,8 +241,35 @@ function App() {
             </p>
           </footer>
         </Reveal>
-      </main>
-    </div>
+          </main>
+          </div>
+
+          {playlistPopupOpen && (
+            <div
+              className="playlist-modal-backdrop"
+              role="presentation"
+              onClick={() => setPlaylistPopupOpen(false)}
+            />
+          )}
+
+          <button
+            type="button"
+            className={`music-fab${embedPlaying ? ' music-fab--beat' : ''}`}
+            onClick={() => setPlaylistPopupOpen((o) => !o)}
+            aria-label={playlistPopupOpen ? 'Close playlist' : 'Open playlist'}
+            aria-expanded={playlistPopupOpen}
+            aria-controls="playlist-embed-host"
+          >
+            <span className="music-fab__label">Music</span>
+            <span className="music-fab__viz" aria-hidden="true">
+              <span className="music-fab__viz-bar" />
+              <span className="music-fab__viz-bar" />
+              <span className="music-fab__viz-bar" />
+            </span>
+          </button>
+        </>
+      )}
+    </>
   )
 }
 
