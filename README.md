@@ -1,16 +1,28 @@
-# React + Vite
+# Happy Birthday, Cassidy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This site is a little love letter built as an interactive birthday experience.
+It is part scrapbook, part playlist, part timeline, and all heart.
 
-Currently, two official plugins are available:
+## What this is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+A custom page made to celebrate Cassidy, with:
 
-## React Compiler
+- a song picker and persistent music player
+- a quote and profile card
+- a photo carousel
+- a timeline of key memories
+- a 3x3 "things that remind me of you" grid
+- a closing signature message
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## For Cass
 
-## Expanding the ESLint configuration
+If you are reading this, this whole site exists because of you.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Every section was made with intention, from the colors to the little details,
+so it could feel personal instead of generic. You have brought a lot of joy
+into my life, and this is one small way of saying thank you.
+
+Happy Birthday.
+
+Love,  
+Mike
