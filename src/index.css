@@ -1,0 +1,53 @@
+:root {
+  --pink-50: #fff5fb;
+  --pink-100: #ffe8f4;
+  --pink-200: #ffd0ea;
+  --pink-300: #ffa8d8;
+  --pink-400: #ff7ac4;
+  --pink-500: #f94fa8;
+  --pink-600: #e12d8f;
+  --pink-700: #be1c73;
+  --pink-800: #9c185f;
+  --rose-deep: #7a1348;
+  --lilac: #e8d4ff;
+  --text: #5c2144;
+  --text-soft: #8a3d66;
+  --white: #ffffff;
+  --shadow-pink: rgba(233, 45, 143, 0.35);
+  --shadow-soft: rgba(124, 24, 80, 0.12);
+
+  --font-display: 'Fredoka', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+
+  color-scheme: light;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--text);
+  background: var(--pink-100);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  overflow-x: hidden;
+  transition:
+    background-color 0.6s ease,
+    color 0.45s ease;
+}
+
+#root {
+  min-height: 100svh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  position: relative;
+}
