@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { OpeningSequence, DEFAULT_LETTER_MESSAGE } from './OpeningSequence.jsx'
 import { SpotifyPlaylistEmbed } from './SpotifyPlaylistEmbed.jsx'
+import galleryImg6438 from './assets/gallery/IMG_6438.PNG'
+import galleryImg6439 from './assets/gallery/IMG_6439.PNG'
+import galleryImg6441 from './assets/gallery/IMG_6441.PNG'
+import galleryImg6442 from './assets/gallery/IMG_6442.PNG'
+import galleryImg6443 from './assets/gallery/IMG_6443.PNG'
+import galleryImg6444 from './assets/gallery/IMG_6444.PNG'
+import galleryImg6445 from './assets/gallery/IMG_6445.PNG'
+import galleryImg6446 from './assets/gallery/IMG_6446.PNG'
+import galleryImg6447 from './assets/gallery/IMG_6447.PNG'
+import galleryImg6449 from './assets/gallery/IMG_6449.PNG'
 import './App.css'
 
 /** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
@@ -132,6 +142,188 @@ const WYR_QUESTIONS = [
   },
 ]
 
+/** Photo carousel — swap `caption` / `alt` strings for your real memories. */
+const GALLERY_SLIDES = [
+  {
+    src: galleryImg6446,
+    alt: 'A photo from our gallery',
+    caption: 'Some of my favorite moments with you.',
+  },
+  {
+    src: galleryImg6447,
+    alt: 'A photo from our gallery',
+    caption: 'A night out at the bars',
+  },
+  {
+    src: galleryImg6439,
+    alt: 'A photo from our gallery',
+    caption: 'Sharks game night',
+  },
+  {
+    src: galleryImg6449,
+    alt: 'A photo from our gallery',
+    caption: 'Good dinners',
+  },
+  {
+    src: galleryImg6441,
+    alt: 'A photo from our gallery',
+    caption: 'More Sharks game nights',
+  },
+  {
+    src: galleryImg6438,
+    alt: 'A photo from our gallery',
+    caption: 'Meeting Randy Hahn',
+  },
+  {
+    src: galleryImg6442,
+    alt: 'A photo from our gallery',
+    caption: 'More Sharks game nights',
+  },
+  {
+    src: galleryImg6443,
+    alt: 'A photo from our gallery',
+    caption: 'More Sharks game nights',
+  },
+  {
+    src: galleryImg6444,
+    alt: 'A photo from our gallery',
+    caption: "My LEAST favorite meme you've sent me",
+  },
+  {
+    src: galleryImg6445,
+    alt: 'A photo from our gallery',
+    caption: "My favorite meme you've sent me",
+  },
+  {
+    src: galleryImg6446,
+    alt: 'A photo from our gallery',
+    caption: 'One more from the highlight reel. Happy birthday, Cassidy.',
+  },
+]
+
+function PhotoGallerySection() {
+  const [slideIndex, setSlideIndex] = useState(0)
+  const carouselRef = useRef(null)
+  const n = GALLERY_SLIDES.length
+  const safeIndex = ((slideIndex % n) + n) % n
+  const slide = GALLERY_SLIDES[safeIndex]
+
+  useEffect(() => {
+    const el = carouselRef.current
+    if (!el) return
+    const onFocusOut = (e) => {
+      const rt = e.relatedTarget
+      if (rt && el.contains(rt)) return
+      setSlideIndex(0)
+    }
+    el.addEventListener('focusout', onFocusOut)
+    return () => el.removeEventListener('focusout', onFocusOut)
+  }, [])
+
+  const goPrev = useCallback(() => {
+    setSlideIndex((i) => i - 1)
+  }, [])
+
+  const goNext = useCallback(() => {
+    setSlideIndex((i) => i + 1)
+  }, [])
+
+  return (
+    <Reveal as="section" className="section gallery-carousel-section" delay={70} aria-labelledby="gallery-heading">
+      <h2 className="section__title" id="gallery-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          📷
+        </span>{' '}
+        Us, on film
+      </h2>
+      <p className="section__lead">Flip through a few favorites — tap the arrows or use the keyboard when this block is focused.</p>
+
+      <div
+        ref={carouselRef}
+        className="gallery-carousel"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Photo memories"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault()
+            goPrev()
+          }
+          if (e.key === 'ArrowRight') {
+            e.preventDefault()
+            goNext()
+          }
+        }}
+      >
+        <div className="gallery-carousel__row">
+          <button
+            type="button"
+            className="gallery-carousel__arrow gallery-carousel__arrow--prev"
+            onClick={goPrev}
+            aria-label="Previous photo"
+          >
+            <span aria-hidden="true">‹</span>
+          </button>
+
+          <figure className="gallery-carousel__figure">
+            <img
+              key={slide.src}
+              className="gallery-carousel__img"
+              src={slide.src}
+              alt={slide.alt}
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+
+          <button
+            type="button"
+            className="gallery-carousel__arrow gallery-carousel__arrow--next"
+            onClick={goNext}
+            aria-label="Next photo"
+          >
+            <span aria-hidden="true">›</span>
+          </button>
+        </div>
+
+        <p className="gallery-carousel__caption" aria-live="polite">
+          {slide.caption}
+        </p>
+        <p className="gallery-carousel__counter" aria-hidden="true">
+          {safeIndex + 1} / {n}
+        </p>
+      </div>
+    </Reveal>
+  )
+}
+
+function WyrResetButton({ onReset }) {
+  return (
+    <button
+      type="button"
+      className="wyr__reset wyr__reset--active"
+      onClick={onReset}
+      aria-label="Reset would you rather from the start"
+      title="Reset"
+    >
+      <svg
+        className="wyr__reset-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0 0 13.803 -3.7M4.031 9.865a8.25 8.25 0 0 1 13.803 -3.7l3.181 3.182m0-4.991v4.99" />
+      </svg>
+    </button>
+  )
+}
+
 function WouldYouRatherSection() {
   const [index, setIndex] = useState(0)
   const [choice, setChoice] = useState(null)
@@ -160,6 +352,8 @@ function WouldYouRatherSection() {
     setChoice(null)
   }, [])
 
+  const showReset = index > 0 || choice !== null || finished
+
   return (
     <Reveal as="section" className="section wyr" delay={50} aria-labelledby="wyr-heading">
       <h2 className="section__title" id="wyr-heading">
@@ -174,6 +368,11 @@ function WouldYouRatherSection() {
 
       {finished ? (
         <div className="wyr__panel wyr__panel--done">
+          {showReset ? (
+            <div className="wyr__panel-bar wyr__panel-bar--done">
+              <WyrResetButton onReset={resetAll} />
+            </div>
+          ) : null}
           <p className="wyr__done-text">That&apos;s every round. You&apos;re kind of wonderful.</p>
           <button type="button" className="btn btn--ghost wyr__again" onClick={resetAll}>
             Play again
@@ -181,9 +380,18 @@ function WouldYouRatherSection() {
         </div>
       ) : (
         <div className="wyr__panel">
-          <p className="wyr__progress" aria-live="polite">
-            {index + 1} / {total}
-          </p>
+          {showReset ? (
+            <div className="wyr__panel-bar">
+              <p className="wyr__progress" aria-live="polite">
+                {index + 1} / {total}
+              </p>
+              <WyrResetButton onReset={resetAll} />
+            </div>
+          ) : (
+            <p className="wyr__progress wyr__progress--solo" aria-live="polite">
+              {index + 1} / {total}
+            </p>
+          )}
 
           <h3 className="wyr__question">{q.question}</h3>
 
@@ -441,10 +649,9 @@ function App() {
 
       {playlistIntroDone && (
         <>
+          <div className="app__bg" aria-hidden="true" />
+          <FloatingDecor />
           <div className={`app app--enter${playlistIntroDone ? ' app--with-playlist-dock' : ''}`}>
-            <div className="app__bg" aria-hidden="true" />
-            <FloatingDecor />
-
       <header className="hero">
         <div className="hero__ribbon" aria-hidden="true">
           <span className="hero__ribbon-dot" />
@@ -486,6 +693,8 @@ function App() {
 
       <main className="main">
         <WouldYouRatherSection />
+
+        <PhotoGallerySection />
 
         <Reveal as="section" className="section section--footer" delay={100}>
           <footer className="footer">
