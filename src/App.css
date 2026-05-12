@@ -478,6 +478,95 @@
   transform: translateX(2px);
 }
 
+/* ---- Timeline ---- */
+.timeline-section {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.timeline-list {
+  margin: 0;
+  padding: 0 0 0 1.15rem;
+  list-style: none;
+  border-left: 2px solid rgba(244, 120, 190, 0.35);
+}
+
+.timeline-list__item {
+  position: relative;
+  margin: 0 0 1.2rem;
+  padding: 0.05rem 0 0.05rem 1rem;
+}
+
+.timeline-list__item::before {
+  content: "";
+  position: absolute;
+  left: -1.55rem;
+  top: 0.55rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  border: 2px solid rgba(243, 76, 158, 0.75);
+  background: #fff4fb;
+  box-shadow: 0 0 0 4px rgba(255, 194, 229, 0.42);
+}
+
+.timeline-list__item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-list__year {
+  display: inline-block;
+  margin: 0 0 0.45rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 183, 217, 0.95), rgba(255, 154, 201, 0.92));
+  color: #5f183e;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+}
+
+.timeline-list__detail {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 181, 217, 0.55);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 236, 247, 0.72));
+  box-shadow: 0 8px 22px rgba(193, 78, 132, 0.14);
+  color: #5c2942;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+/* ---- Think of you grid ---- */
+.think-of-you-section {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.think-of-you-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.5rem, 2vw, 0.9rem);
+}
+
+.think-of-you-grid__item {
+  margin: 0;
+  border-radius: 0.9rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 170, 210, 0.55);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 22px rgba(193, 78, 132, 0.14);
+}
+
+.think-of-you-grid__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
 /* ---- Banner ---- */
 .section--banner {
   margin-top: -0.5rem;

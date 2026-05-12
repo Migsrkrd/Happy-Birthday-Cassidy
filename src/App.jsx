@@ -202,6 +202,37 @@ const GALLERY_SLIDES = [
   },
 ];
 
+const RELATIONSHIP_TIMELINE = [
+  {
+    year: "2015",
+    detail: "We first met in Mr. Hilgers' history class at Leland High.",
+  },
+  {
+    year: "2020",
+    detail:
+      "We hung out for the first time with friends at a downtown San Jose bar, and somehow ended up debating the color of Harry Potter pixies.",
+  },
+  {
+    year: "2022",
+    detail: "When you were away at college, we still found ways to stay close and keep in touch.",
+  },
+  {
+    year: "2024",
+    detail: "We started spending more time together and growing into a real friendship.",
+  },
+  {
+    year: "2026",
+    detail: "Our first date happened, and our relationship officially began.",
+  },
+];
+
+const THINK_OF_YOU_IMAGES = Object.values(
+  import.meta.glob("./assets/think-of-you/*.{jpg,jpeg,png,webp,avif}", {
+    eager: true,
+    import: "default",
+  }),
+).sort((a, b) => String(a).localeCompare(String(b)));
+
 function PhotoGallerySection() {
   const [slideIndex, setSlideIndex] = useState(0);
   const carouselRef = useRef(null);
@@ -299,6 +330,62 @@ function PhotoGallerySection() {
         <p className="gallery-carousel__counter" aria-hidden="true">
           {safeIndex + 1} / {n}
         </p>
+      </div>
+    </Reveal>
+  );
+}
+
+function TimelineSection() {
+  return (
+    <Reveal as="section" className="section timeline-section" delay={85} aria-labelledby="timeline-heading">
+      <h2 className="section__title" id="timeline-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🗓️
+        </span>{" "}
+        Our timeline
+      </h2>
+      <p className="section__lead">A few moments that quietly led us here.</p>
+
+      <ol className="timeline-list" aria-label="Relationship timeline">
+        {RELATIONSHIP_TIMELINE.map((item) => (
+          <li key={item.year} className="timeline-list__item">
+            <p className="timeline-list__year">{item.year}</p>
+            <p className="timeline-list__detail">{item.detail}</p>
+          </li>
+        ))}
+      </ol>
+    </Reveal>
+  );
+}
+
+function ThinkOfYouGridSection() {
+  return (
+    <Reveal
+      as="section"
+      className="section think-of-you-section"
+      delay={95}
+      aria-labelledby="think-of-you-heading"
+    >
+      <h2 className="section__title" id="think-of-you-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          💭
+        </span>{" "}
+        Things that remind me of you
+      </h2>
+      <p className="section__lead">A little 3x3 mood board of Cassidy energy.</p>
+
+      <div className="think-of-you-grid" role="list" aria-label="Things that remind me of you">
+        {THINK_OF_YOU_IMAGES.map((src, idx) => (
+          <figure className="think-of-you-grid__item" role="listitem" key={`${src}-${idx}`}>
+            <img
+              src={src}
+              alt={`Thing that reminds me of you ${idx + 1}`}
+              className="think-of-you-grid__img"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))}
       </div>
     </Reveal>
   );
@@ -741,6 +828,10 @@ function App() {
               <WouldYouRatherSection />
 
               <PhotoGallerySection />
+
+              <TimelineSection />
+
+              <ThinkOfYouGridSection />
 
               <Reveal
                 as="section"
