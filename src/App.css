@@ -1054,13 +1054,46 @@
   font-family: var(--font-body);
   font-weight: 700;
   color: var(--text-soft);
-  margin: 0 0 1rem;
+  margin: 0 0 1.05rem;
   transition: letter-spacing 0.45s ease, color 0.35s ease;
 }
 
 .footer:hover .footer__line {
   letter-spacing: 0.04em;
   color: var(--pink-700);
+}
+
+.footer__stats {
+  margin: 0 0 1.05rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.footer__stat {
+  margin: 0;
+  padding: 0.65rem 0.7rem;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 174, 217, 0.5);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.footer__stat-value {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pink-700);
+  line-height: 1.1;
+}
+
+.footer__stat-label {
+  margin: 0.28rem 0 0;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(98, 32, 69, 0.74);
 }
 
 .footer__hearts {
@@ -1087,6 +1120,12 @@
 .footer__hearts span:hover {
   transform: scale(1.4) rotate(15deg);
   color: var(--pink-600);
+}
+
+@media (max-width: 30rem) {
+  .footer__stats {
+    grid-template-columns: 1fr;
+  }
 }
 
 @keyframes heart-bob {

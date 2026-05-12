@@ -232,6 +232,12 @@ const THINK_OF_YOU_IMAGES = Object.values(
     import: "default",
   }),
 ).sort((a, b) => String(a).localeCompare(String(b)));
+const PROJECT_STATS = [
+  { label: "Lines of code", value: "3,506+" },
+  { label: "Source files", value: "7" },
+  { label: "Photos included", value: String(GALLERY_SLIDES.length + THINK_OF_YOU_IMAGES.length + 1) },
+  { label: "Years of history", value: String(RELATIONSHIP_TIMELINE.length) },
+];
 
 function PhotoGallerySection() {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -969,8 +975,16 @@ function App() {
               >
                 <footer className="footer">
                   <p className="footer__line">
-                    Made with love — and a lot of pink CSS — just for you.
+                    Made with love and a lot of pink CSS just for you.
                   </p>
+                  <dl className="footer__stats" aria-label="Project stats">
+                    {PROJECT_STATS.map((stat) => (
+                      <div className="footer__stat" key={stat.label}>
+                        <dt className="footer__stat-value">{stat.value}</dt>
+                        <dd className="footer__stat-label">{stat.label}</dd>
+                      </div>
+                    ))}
+                  </dl>
                   <p className="footer__hearts" aria-hidden="true">
                     <span>♡</span>
                     <span>♡</span>
