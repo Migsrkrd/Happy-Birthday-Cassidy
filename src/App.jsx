@@ -6,6 +6,263 @@ import './App.css'
 /** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
 const LETTER_TO_CASSIDY = DEFAULT_LETTER_MESSAGE
 
+/**
+ * Would-you-rather prompts. `question` shows at the top; `a` / `b` are the two answers.
+ * `pickForHer` is what *you* guessed she’d choose (`'a'` or `'b'`) — edit anytime.
+ */
+const WYR_QUESTIONS = [
+  {
+    id: 'wyr-sunsets',
+    question: 'Sunsets or sunrises?',
+    a: 'Sunsets',
+    b: 'Sunrises',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-ice-cream-cake',
+    question: 'Ice cream or cake?',
+    a: 'Ice cream',
+    b: 'Cake',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-ig-tt',
+    question: 'Instagram or TikTok?',
+    a: 'Instagram',
+    b: 'TikTok',
+    pickForHer: 'b',
+  },
+  {
+    id: 'wyr-jewelry',
+    question: 'Gold or silver jewelry?',
+    a: 'Gold',
+    b: 'Silver',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-movies',
+    question: 'Romantic movie or horror movie?',
+    a: 'Romantic movie',
+    b: 'Horror movie',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-picnic-brunch',
+    question: 'Picnic or brunch?',
+    a: 'Picnic',
+    b: 'Brunch',
+    pickForHer: 'b',
+  },
+  {
+    id: 'wyr-flowers-choc',
+    question: 'Flowers or chocolates?',
+    a: 'Flowers',
+    b: 'Chocolates',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-sushi-italian',
+    question: 'Sushi or Italian food?',
+    a: 'Sushi',
+    b: 'Italian food',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-dress-jeans',
+    question: 'Dress or jeans?',
+    a: 'Dress',
+    b: 'Jeans',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-city-island',
+    question: 'City life or island life?',
+    a: 'City life',
+    b: 'Island life',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-coffee',
+    question: 'Iced coffee or hot coffee?',
+    a: 'Iced coffee',
+    b: 'Hot coffee',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-cook-bake',
+    question: 'Cooking or baking?',
+    a: 'Cooking',
+    b: 'Baking',
+    pickForHer: 'b',
+  },
+  {
+    id: 'wyr-letters-gifts',
+    question: 'Love letters or surprise gifts?',
+    a: 'Love letters',
+    b: 'Surprise gifts',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-makeup',
+    question: 'Makeup or natural look?',
+    a: 'Makeup',
+    b: 'Natural look',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-sing-dance',
+    question: 'Singing or dancing?',
+    a: 'Singing',
+    b: 'Dancing',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-berries',
+    question: 'Strawberries or watermelon?',
+    a: 'Strawberries',
+    b: 'Watermelon',
+    pickForHer: 'a',
+  },
+  {
+    id: 'wyr-cakes',
+    question: 'Chocolate cake or cheesecake?',
+    a: 'Chocolate cake',
+    b: 'Cheesecake',
+    pickForHer: 'b',
+  },
+]
+
+function WouldYouRatherSection() {
+  const [index, setIndex] = useState(0)
+  const [choice, setChoice] = useState(null)
+
+  const resetAll = useCallback(() => {
+    setIndex(0)
+    setChoice(null)
+  }, [])
+
+  const total = WYR_QUESTIONS.length
+  const finished = index >= total
+  const q = !finished ? WYR_QUESTIONS[index] : null
+  const picked = choice !== null && q !== null
+  const match = picked && choice === q.pickForHer
+
+  const handlePick = useCallback(
+    (letter) => {
+      if (!q || choice !== null) return
+      setChoice(letter)
+    },
+    [q, choice],
+  )
+
+  const goNext = useCallback(() => {
+    setIndex((i) => i + 1)
+    setChoice(null)
+  }, [])
+
+  return (
+    <Reveal as="section" className="section wyr" delay={50} aria-labelledby="wyr-heading">
+      <h2 className="section__title" id="wyr-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🤔
+        </span>{' '}
+        Would you rather…
+      </h2>
+      <p className="section__lead">
+        Tap what you&apos;d pick, then see if I guessed the same for you.
+      </p>
+
+      {finished ? (
+        <div className="wyr__panel wyr__panel--done">
+          <p className="wyr__done-text">That&apos;s every round. You&apos;re kind of wonderful.</p>
+          <button type="button" className="btn btn--ghost wyr__again" onClick={resetAll}>
+            Play again
+          </button>
+        </div>
+      ) : (
+        <div className="wyr__panel">
+          <p className="wyr__progress" aria-live="polite">
+            {index + 1} / {total}
+          </p>
+
+          <h3 className="wyr__question">{q.question}</h3>
+
+          {picked ? (
+            <p className="wyr__a11y-live" aria-live="polite">
+              {match ? 'Same as my guess.' : 'Different from my guess.'}
+            </p>
+          ) : null}
+
+          <div className="wyr__choices">
+            <button
+              type="button"
+              className={[
+                'wyr__choice',
+                picked && choice === 'a' && (match ? 'wyr__choice--picked wyr__choice--match' : 'wyr__choice--picked wyr__choice--miss'),
+                picked && choice !== 'a' ? 'wyr__choice--idle' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              disabled={picked}
+              onClick={() => handlePick('a')}
+              aria-label={
+                picked && choice === 'a'
+                  ? `You picked ${q.a}. ${match ? 'Same as my guess.' : 'Different from my guess.'}`
+                  : picked
+                    ? `${q.a}, not selected`
+                    : `Answer A: ${q.a}`
+              }
+            >
+              {picked && choice === 'a' ? (
+                <span className="wyr__choice-face" aria-hidden="true" title={match ? 'Match' : 'No match'}>
+                  {match ? '😊' : '😢'}
+                </span>
+              ) : null}
+              <span className="wyr__choice-label">A</span>
+              <span className="wyr__choice-text">{q.a}</span>
+            </button>
+            <button
+              type="button"
+              className={[
+                'wyr__choice',
+                picked && choice === 'b' && (match ? 'wyr__choice--picked wyr__choice--match' : 'wyr__choice--picked wyr__choice--miss'),
+                picked && choice !== 'b' ? 'wyr__choice--idle' : '',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              disabled={picked}
+              onClick={() => handlePick('b')}
+              aria-label={
+                picked && choice === 'b'
+                  ? `You picked ${q.b}. ${match ? 'Same as my guess.' : 'Different from my guess.'}`
+                  : picked
+                    ? `${q.b}, not selected`
+                    : `Answer B: ${q.b}`
+              }
+            >
+              {picked && choice === 'b' ? (
+                <span className="wyr__choice-face" aria-hidden="true" title={match ? 'Match' : 'No match'}>
+                  {match ? '😊' : '😢'}
+                </span>
+              ) : null}
+              <span className="wyr__choice-label">B</span>
+              <span className="wyr__choice-text">{q.b}</span>
+            </button>
+          </div>
+
+          {picked ? (
+            <div className="wyr__next-wrap">
+              <button type="button" className="btn btn--primary wyr__next" onClick={goNext}>
+                {index + 1 < total ? 'Next question' : 'Finish'}
+              </button>
+            </div>
+          ) : null}
+        </div>
+      )}
+    </Reveal>
+  )
+}
+
 function useReveal() {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
@@ -228,6 +485,7 @@ function App() {
       </header>
 
       <main className="main">
+        <WouldYouRatherSection />
 
         <Reveal as="section" className="section section--footer" delay={100}>
           <footer className="footer">
