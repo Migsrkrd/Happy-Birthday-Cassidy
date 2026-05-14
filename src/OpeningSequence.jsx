@@ -6,13 +6,19 @@ import './OpeningSequence.css'
  */
 export const DEFAULT_LETTER_MESSAGE = `Cassidy,
 
-This is where your long message will live. You can write as much as you want here—stories, memories, inside jokes, a list of things you love about her, plans you’re excited for, whatever feels right.
+These past few months have been some of the most reassuring, secure, fun, and exciting months of my life. Life with you is exactly the way I always thought it would be.
 
-Take all the space you need. Line breaks and multiple paragraphs work fine.
+From meeting you all those years ago, to now, I've never felt more at home. I can honestly say I've never been in love with someone more than I am with you.
 
-When you’re ready for the rest of the birthday site, she’ll tap Continue.
+Even on the days where all we can do is text each other, I am filled with a sense of peace and contentment that I've never felt before. You are everything I've ever wanted and more.
 
-— With love`
+Thank you for taking a chance on a nerdy, yapping, and (only on very rare occasions) annoying guy. I'm so glad you're in my life, and I can't wait to see what the future holds.
+
+I love you more than words can say.
+
+Happy Birthday baby.
+
+— Your Stag`
 
 /** Deterministic PRNG for stable balloon layout per id */
 function mulberry32(seed) {

@@ -1635,7 +1635,10 @@
   gap: 0.9rem;
   padding: clamp(0.75rem, 3vw, 1.5rem) clamp(0.9rem, 4vw, 1.75rem)
     max(calc(env(safe-area-inset-bottom, 0px) + 0.75rem), clamp(0.9rem, 4vw, 1.75rem));
+  /* Keep x clipped: decorative glow uses inset -25% and would otherwise widen the scroll box. */
+  overflow-x: hidden;
   overflow-y: auto;
+  overscroll-behavior-x: none;
   background: radial-gradient(ellipse 120% 80% at 50% 0%, #1a0a14 0%, #060308 55%, #020204 100%);
   transform: none;
 }
@@ -1807,6 +1810,9 @@
 
 .playlist-embed-host--gate .playlist-embed-host__frame {
   flex: 0 0 auto;
+  /* Avoid iframe intrinsic min-width forcing horizontal overflow on small viewports. */
+  min-width: 0;
+  max-width: 100%;
 }
 
 .playlist-embed-host--gate .spotify-embed-api-host {
