@@ -538,6 +538,300 @@
   line-height: 1.55;
 }
 
+/* ---- May 16 “birth day on Earth” fact sheet ---- */
+.fact-sheet-section {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.fact-sheet__snapshot {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 170, 210, 0.5);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255, 214, 236, 0.55), transparent 42%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(255, 232, 246, 0.78));
+  box-shadow: 0 10px 28px rgba(173, 52, 113, 0.12);
+}
+
+.fact-sheet__snapshot-date {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 2.6vw, 1.2rem);
+  color: var(--rose-deep);
+  letter-spacing: 0.02em;
+}
+
+.fact-sheet__snapshot-list {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  color: #5c2942;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.fact-sheet__snapshot-list li {
+  margin: 0.35rem 0;
+}
+
+.fact-sheet__snapshot-list strong {
+  color: var(--pink-700);
+  font-weight: 700;
+}
+
+.fact-sheet__snapshot-note {
+  margin: 0.75rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: rgba(92, 41, 66, 0.82);
+}
+
+.fact-sheet__snapshot-note--soft {
+  margin-top: 0.45rem;
+  color: rgba(92, 41, 66, 0.68);
+  font-style: italic;
+}
+
+.fact-sheet__era {
+  margin: 0 0 1.35rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.85rem;
+  border-left: 3px solid rgba(255, 130, 180, 0.55);
+  background: rgba(255, 250, 252, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-soft);
+}
+
+.fact-sheet__hubble-wrap {
+  margin: 0 0 1.5rem;
+}
+
+.fact-sheet__subhead--hubble {
+  margin-top: 0.15rem;
+}
+
+.fact-sheet__hubble-deck {
+  margin: 0 0 0.85rem;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-soft);
+  max-width: 40em;
+}
+
+.fact-sheet__hubble {
+  margin: 0;
+}
+
+.fact-sheet__hubble-frame {
+  border-radius: 0.9rem;
+  overflow: hidden;
+  border: 1px solid rgba(120, 90, 160, 0.35);
+  box-shadow:
+    0 12px 36px rgba(40, 20, 60, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  background: #050208;
+}
+
+.fact-sheet__hubble-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.fact-sheet__hubble-caption {
+  margin: 0.75rem 0 0;
+  padding: 0 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #5c2942;
+}
+
+.fact-sheet__hubble-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--rose-deep);
+}
+
+.fact-sheet__hubble-body {
+  font-weight: 600;
+}
+
+.fact-sheet__hubble-credit {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: rgba(92, 41, 66, 0.65);
+}
+
+.fact-sheet__subhead {
+  margin: 1.35rem 0 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--rose-deep);
+}
+
+.fact-sheet__subhead:first-of-type {
+  margin-top: 0.25rem;
+}
+
+.fact-sheet__events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.fact-sheet__event {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.65rem 0.85rem;
+  align-items: start;
+  padding: 0.75rem 0.95rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 181, 217, 0.45);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(255, 240, 248, 0.65));
+  box-shadow: 0 6px 18px rgba(193, 78, 132, 0.1);
+}
+
+.fact-sheet__event-year {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--pink-700);
+  white-space: nowrap;
+  padding: 0.2rem 0.45rem;
+  border-radius: 0.45rem;
+  background: rgba(255, 210, 232, 0.55);
+}
+
+.fact-sheet__event-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #5c2942;
+}
+
+.fact-sheet__birthday-lead {
+  margin: 0 0 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.fact-sheet__birthdays {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fact-sheet__birthday-chip {
+  margin: 0;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 160, 200, 0.45);
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #5c2942;
+}
+
+.fact-sheet__birthday-year {
+  font-weight: 600;
+  color: rgba(92, 41, 66, 0.62);
+}
+
+.fact-sheet__footnote {
+  margin: 1.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(92, 41, 66, 0.75);
+  font-style: italic;
+  text-align: center;
+  max-width: 34em;
+  margin-inline: auto;
+}
+
+/* ---- Florida Man, May 16 ---- */
+.florida-man-section {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.florida-man-section .section__title-icon {
+  filter: saturate(1.15);
+}
+
+.florida-man__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.florida-man__card {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(255, 140, 80, 0.38);
+  background:
+    linear-gradient(125deg, rgba(255, 252, 248, 0.98) 0%, rgba(255, 236, 220, 0.55) 100%);
+  box-shadow: 0 8px 22px rgba(180, 90, 40, 0.1);
+}
+
+.florida-man__year {
+  display: inline-block;
+  margin: 0 0 0.45rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6b2e0a;
+  background: linear-gradient(135deg, rgba(255, 200, 140, 0.95), rgba(255, 160, 95, 0.85));
+  border: 1px solid rgba(210, 110, 40, 0.35);
+}
+
+.florida-man__headline {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #4a2618;
+}
+
+.florida-man__footnote {
+  margin: 1.1rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  font-style: italic;
+  text-align: center;
+  color: rgba(74, 38, 24, 0.72);
+  max-width: 32em;
+  margin-inline: auto;
+}
+
 /* ---- Think of you grid ---- */
 .think-of-you-section {
   max-width: 56rem;

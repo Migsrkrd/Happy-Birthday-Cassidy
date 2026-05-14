@@ -12,6 +12,16 @@ import galleryImg6446 from "./assets/gallery/IMG_6446.PNG";
 import galleryImg6447 from "./assets/gallery/IMG_6447.PNG";
 import galleryImg6449 from "./assets/gallery/IMG_6449.PNG";
 import profileImg from "./assets/gallery/profile.PNG";
+import {
+  BIRTH_DATE,
+  BIRTH_DAY_SNAPSHOT,
+  ERA_SNIPPET,
+  HUBBLE_ON_MAY16,
+  ON_THIS_DAY_EVENTS,
+  SHARED_BIRTHDAYS,
+} from "./may16FactSheetData.js";
+import hubbleHcg90Img from "./assets/hubble-hickson-compact-group-90.png";
+import { FLORIDA_MAN_MAY16_HEADLINES } from "./floridaManMay16Data.js";
 import "./App.css";
 
 /** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
@@ -474,6 +484,143 @@ function TimelineSection() {
           </li>
         ))}
       </ol>
+    </Reveal>
+  );
+}
+
+function May16WorldSection() {
+  const dateLine = `${BIRTH_DAY_SNAPSHOT.weekday}, ${BIRTH_DATE.month} ${BIRTH_DATE.day}, ${BIRTH_DATE.year}`;
+  return (
+    <Reveal
+      as="section"
+      className="section fact-sheet-section"
+      delay={88}
+      aria-labelledby="may16-heading"
+    >
+      <h2 className="section__title" id="may16-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🌍
+        </span>{" "}
+        The world on your birthday
+      </h2>
+      <p className="section__lead">
+        Like those keepsake posters for newborns — a little of what May 16 was up to, and what
+        {BIRTH_DATE.year} felt like when you showed up.
+      </p>
+
+      <div className="fact-sheet__snapshot" role="group" aria-label={`${dateLine} snapshot`}>
+        <p className="fact-sheet__snapshot-date">{dateLine}</p>
+        <ul className="fact-sheet__snapshot-list">
+          <li>
+            <strong>Moon</strong> — {BIRTH_DAY_SNAPSHOT.moonSummary}
+          </li>
+          <li>
+            <strong>#1 single (U.S.)</strong> — &ldquo;{BIRTH_DAY_SNAPSHOT.chartTitle}&rdquo; by{" "}
+            {BIRTH_DAY_SNAPSHOT.chartArtist}
+          </li>
+        </ul>
+        <p className="fact-sheet__snapshot-note">{BIRTH_DAY_SNAPSHOT.chartNote}</p>
+        <p className="fact-sheet__snapshot-note fact-sheet__snapshot-note--soft">
+          {BIRTH_DAY_SNAPSHOT.moonDetail}
+        </p>
+      </div>
+
+      <p className="fact-sheet__era">{ERA_SNIPPET}</p>
+
+      <div className="fact-sheet__hubble-wrap">
+        <h3 className="fact-sheet__subhead fact-sheet__subhead--hubble" id="may16-hubble-heading">
+          What Hubble saw on May 16
+        </h3>
+        <p className="fact-sheet__hubble-deck" id="may16-hubble-deck">
+          On May 16 in {HUBBLE_ON_MAY16.observationYear}, this was the view — three galaxies caught in
+          the same frame.
+        </p>
+        <figure
+          className="fact-sheet__hubble"
+          aria-labelledby="may16-hubble-heading"
+          aria-describedby="may16-hubble-deck may16-hubble-caption"
+        >
+          <div className="fact-sheet__hubble-frame">
+            <img
+              className="fact-sheet__hubble-img"
+              src={hubbleHcg90Img}
+              alt="Hubble Space Telescope image of Hickson Compact Group 90: three bright interacting galaxies — NGC 7173 left of center, distorted spiral NGC 7174 upper right, and elliptical NGC 7176 lower right — against a field of distant stars and galaxies."
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption className="fact-sheet__hubble-caption" id="may16-hubble-caption">
+            <strong className="fact-sheet__hubble-title">{HUBBLE_ON_MAY16.title}</strong>
+            <span className="fact-sheet__hubble-body"> {HUBBLE_ON_MAY16.body}</span>
+            <span className="fact-sheet__hubble-credit">Image: {HUBBLE_ON_MAY16.credit}</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <h3 className="fact-sheet__subhead" id="may16-events-heading">
+        This date in history
+      </h3>
+      <ul className="fact-sheet__events" aria-labelledby="may16-events-heading">
+        {ON_THIS_DAY_EVENTS.map((e) => (
+          <li key={e.year} className="fact-sheet__event">
+            <span className="fact-sheet__event-year">{e.year}</span>
+            <span className="fact-sheet__event-text">{e.text}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="fact-sheet__subhead" id="may16-birthdays-heading">
+        Some famous May 16 birthdays
+      </h3>
+      <p className="fact-sheet__birthday-lead" id="may16-birthdays-desc">
+        You share the calendar with:
+      </p>
+      <ul className="fact-sheet__birthdays" aria-describedby="may16-birthdays-desc">
+        {SHARED_BIRTHDAYS.map((p) => (
+          <li key={p.name} className="fact-sheet__birthday-chip">
+            {p.name}{" "}
+            <span className="fact-sheet__birthday-year">({p.year})</span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="fact-sheet__footnote">
+        None of this had to happen for your birthday to matter — it&apos;s just fun context, like
+        tiny footnotes in the margin of the universe.
+      </p>
+    </Reveal>
+  );
+}
+
+function FloridaManMay16Section() {
+  return (
+    <Reveal
+      as="section"
+      className="section florida-man-section"
+      delay={90}
+      aria-labelledby="florida-man-heading"
+    >
+      <h2 className="section__title" id="florida-man-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🐊
+        </span>{" "}
+        Florida Man, May 16
+      </h2>
+      <p className="section__lead">
+        Headlines that share your birthday on the calendar — absolutely not your energy, just peak
+        peninsula chaos for the date.
+      </p>
+      <ul className="florida-man__list" aria-label="Florida Man headlines on May 16">
+        {FLORIDA_MAN_MAY16_HEADLINES.map((item, idx) => (
+          <li key={`${item.year}-${idx}`} className="florida-man__card">
+            <span className="florida-man__year">{item.year}</span>
+            <p className="florida-man__headline">{item.headline}</p>
+          </li>
+        ))}
+      </ul>
+      <p className="florida-man__footnote">
+        Curated for laughs — you are not legally responsible for any of this.
+      </p>
     </Reveal>
   );
 }
@@ -965,6 +1112,10 @@ function App() {
               <PhotoGallerySection />
 
               <TimelineSection />
+
+              <May16WorldSection />
+
+              <FloridaManMay16Section />
 
               <ThinkOfYouGridSection />
 
