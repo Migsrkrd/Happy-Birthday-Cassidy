@@ -61,6 +61,12 @@ body {
     color 0.45s ease;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 #root {
   min-height: 100svh;
   width: 100%;

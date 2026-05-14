@@ -253,6 +253,47 @@ const TECH_SPECS = [
   { label: "Source files under src", value: "12" },
 ];
 
+const MAIN_TOC_LINKS = [
+  { href: "#site-hero", label: "Happy Birthday" },
+  { href: "#wyr-heading", label: "Would you rather" },
+  { href: "#gallery-heading", label: "Us, on film" },
+  { href: "#timeline-heading", label: "Our timeline" },
+  { href: "#may16-heading", label: "The world on your birthday" },
+  { href: "#may-symbols-heading", label: MAY_BIRTH_SYMBOLS_INTRO.title },
+  { href: "#florida-man-heading", label: "Florida Man, May 16" },
+  { href: "#think-of-you-heading", label: "Things that remind me of you" },
+  { href: "#site-footer", label: "Credits & tech" },
+  { href: "#closing-signature", label: "Sign-off" },
+];
+
+function MainTableOfContents() {
+  return (
+    <Reveal
+      as="nav"
+      className="section toc-nav-section"
+      delay={32}
+      aria-labelledby="toc-nav-heading"
+    >
+      <h2 className="section__title" id="toc-nav-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          📑
+        </span>{" "}
+        Jump to a section
+      </h2>
+      <p className="section__lead">Tap a stop on the tour and the page will scroll there.</p>
+      <ul className="toc-nav__list">
+        {MAIN_TOC_LINKS.map((item) => (
+          <li key={item.href} className="toc-nav__item">
+            <a className="toc-nav__link" href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  );
+}
+
 function PhotoGallerySection() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [isSliding, setIsSliding] = useState(false);
@@ -1114,7 +1155,7 @@ function App() {
           <div
             className={`app app--enter${playlistIntroDone ? " app--with-playlist-dock" : ""}`}
           >
-            <header className="hero">
+            <header className="hero" id="site-hero">
               <div className="hero__ribbon" aria-hidden="true">
                 <span className="hero__ribbon-dot" />
                 <span className="hero__ribbon-dot" />
@@ -1164,6 +1205,8 @@ function App() {
             </header>
 
             <main className="main">
+              <MainTableOfContents />
+
               <WouldYouRatherSection />
 
               <PhotoGallerySection />
@@ -1183,7 +1226,7 @@ function App() {
                 className="section section--footer"
                 delay={100}
               >
-                <footer className="footer">
+                <footer className="footer" id="site-footer">
                   <p className="footer__line">
                     Made with love and a lot of pink CSS just for you.
                   </p>
@@ -1228,7 +1271,7 @@ function App() {
                 className="section section--closing-signature"
                 delay={120}
               >
-                <div className="closing-signature" aria-label="Closing message">
+                <div className="closing-signature" id="closing-signature" aria-label="Closing message">
                   <p className="closing-signature__headline">
                     Happy Birthday, Cassidy <span aria-hidden="true">💕</span>
                   </p>
