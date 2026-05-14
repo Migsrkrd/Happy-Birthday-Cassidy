@@ -1,5 +1,13 @@
 # Lint and build on PRs; on push to main, also deploy static site to GitHub Pages.
 # Repo settings → Pages → Build and deployment → Source: GitHub Actions.
+#
+# Site passphrase gate (VITE_SITE_ACCESS_HASH / VITE_SITE_ACCESS_QUESTION):
+# The *build* step must receive these as env vars. GitHub only injects them here if they are
+# **repository** Actions secrets (Settings → Secrets and variables → Actions), or org secrets
+# allowed for this repo. Secrets stored only under Settings → Environments → github-pages are
+# NOT available to this job (that environment is only used by the deploy job below), so the
+# live site would ship with an empty hash and no gate. Duplicate env secrets into repository
+# secrets, or split the workflow so the Pages build runs in a job that declares `environment:`.
 name: Deploy to GitHub Pages
 
 on:
@@ -44,6 +52,19 @@ jobs:
             fi
           else
             echo "VITE_BASE_URL=/" >> "$GITHUB_ENV"
+          fi
+
+      - name: Check site gate env for production build
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          VITE_SITE_ACCESS_HASH: ${{ secrets.VITE_SITE_ACCESS_HASH }}
+        run: |
+          n=${#VITE_SITE_ACCESS_HASH}
+          if [ "$n" -ne 64 ]; then
+            echo "::error::VITE_SITE_ACCESS_HASH must be a 64-character SHA-256 hex string at build time (got length $n)."
+            echo "Add it under Settings → Secrets and variables → Actions as a repository secret."
+            echo "If it only exists under Environments → github-pages, duplicate it there: that environment is not attached to the build job, so Vite never sees the hash."
+            exit 1
           fi
 
       - name: Build
