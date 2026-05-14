@@ -991,12 +991,15 @@ function Reveal({ children, className = "", delay = 0, as: Tag = "div" }) {
   );
 }
 
+const FLOATING_DECOR_COUNT = 28;
+
 function FloatingDecor() {
   const items = useMemo(
     () =>
-      Array.from({ length: 20 }, (_, i) => ({
+      Array.from({ length: FLOATING_DECOR_COUNT }, (_, i) => ({
         id: i,
-        left: `${((i * 47) % 92) + 4}%`,
+        /** Even bands across the viewport; translateX(-50%) in CSS centers on this point. */
+        left: `${((i + 0.5) / FLOATING_DECOR_COUNT) * 100}%`,
         delay: `${(i * 0.31) % 6}s`,
         duration: `${7 + (i % 6)}s`,
         size: `${0.85 + (i % 5) * 0.15}rem`,

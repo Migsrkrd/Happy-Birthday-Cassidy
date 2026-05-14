@@ -75,6 +75,10 @@
 .floating-decor {
   position: fixed;
   inset: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100vw;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
@@ -91,13 +95,15 @@
 
 @keyframes float-up {
   0% {
-    transform: translateY(0) rotate(0deg) scale(1);
+    transform: translate(-50%, 0) rotate(0deg) scale(1);
+    opacity: 0.55;
   }
   30% {
+    transform: translate(-50%, -33vh) rotate(72deg) scale(1.06);
     opacity: 0.75;
   }
   100% {
-    transform: translateY(-110vh) rotate(220deg) scale(1.15);
+    transform: translate(-50%, -110vh) rotate(220deg) scale(1.15);
     opacity: 0;
   }
 }
