@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "hash-passphrase": "node scripts/hash-passphrase.mjs",
+    "hash-answer": "node scripts/hash-passphrase.mjs"
   },
   "dependencies": {
     "react": "^19.2.6",

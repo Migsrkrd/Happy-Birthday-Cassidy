@@ -12,14 +12,25 @@ import galleryImg6446 from "./assets/gallery/IMG_6446.PNG";
 import galleryImg6447 from "./assets/gallery/IMG_6447.PNG";
 import galleryImg6449 from "./assets/gallery/IMG_6449.PNG";
 import profileImg from "./assets/gallery/profile.PNG";
+import {
+  BIRTH_DATE,
+  BIRTH_DAY_SNAPSHOT,
+  ERA_SNIPPET,
+  HUBBLE_ON_MAY16,
+  ON_THIS_DAY_EVENTS,
+  SHARED_BIRTHDAYS,
+} from "./may16FactSheetData.js";
+import hubbleHcg90Img from "./assets/hubble-hickson-compact-group-90.png";
+import { FLORIDA_MAN_MAY16_HEADLINES } from "./floridaManMay16Data.js";
+import { MAY_BIRTH_SYMBOLS, MAY_BIRTH_SYMBOLS_INTRO, MAY_SYMBOL_IMAGE_BY_ID } from "./mayBirthSymbolsData.js";
 import "./App.css";
 
-/** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
+/** Replace with your full letter, or edit the default in `OpeningSequence.jsx`. */
 const LETTER_TO_CASSIDY = DEFAULT_LETTER_MESSAGE;
 
 /**
  * Would-you-rather prompts. `question` shows at the top; `a` / `b` are the two answers.
- * `pickForHer` is what *you* guessed she’d choose (`'a'` or `'b'`) — edit anytime.
+ * `pickForHer` is what *you* guessed she’d choose (`'a'` or `'b'`); edit anytime.
  */
 const WYR_QUESTIONS = [
   {
@@ -143,7 +154,7 @@ const WYR_QUESTIONS = [
   },
 ];
 
-/** Photo carousel — swap `caption` / `alt` strings for your real memories. */
+/** Photo carousel: swap `caption` / `alt` strings for your real memories. */
 const GALLERY_SLIDES = [
   {
     src: galleryImg6446,
@@ -232,12 +243,56 @@ const THINK_OF_YOU_IMAGES = Object.values(
     import: "default",
   }),
 ).sort((a, b) => String(a).localeCompare(String(b)));
-const PROJECT_STATS = [
-  { label: "Lines of code", value: "3,506+" },
-  { label: "Source files", value: "7" },
-  { label: "Photos included", value: String(GALLERY_SLIDES.length + THINK_OF_YOU_IMAGES.length + 1) },
-  { label: "Years of history", value: String(RELATIONSHIP_TIMELINE.length) },
+/** Public repo for the curious (footer CTA). */
+const SOURCE_REPO_URL = "https://github.com/Migsrkrd/Happy-Birthday-Cassidy";
+
+const TECH_SPECS = [
+  { label: "UI library", value: "React 19" },
+  { label: "Build & dev server", value: "Vite 8" },
+  { label: "Lines of JS, JSX & CSS", value: "4,600+" },
+  { label: "Source files under src", value: "12" },
 ];
+
+const MAIN_TOC_LINKS = [
+  { href: "#site-hero", label: "Happy Birthday" },
+  { href: "#wyr-heading", label: "Would you rather" },
+  { href: "#gallery-heading", label: "Us, on film" },
+  { href: "#timeline-heading", label: "Our timeline" },
+  { href: "#may16-heading", label: "The world on your birthday" },
+  { href: "#may-symbols-heading", label: MAY_BIRTH_SYMBOLS_INTRO.title },
+  { href: "#florida-man-heading", label: "Florida Man, May 16" },
+  { href: "#think-of-you-heading", label: "Things that remind me of you" },
+  { href: "#site-footer", label: "Credits & tech" },
+  { href: "#closing-signature", label: "Sign-off" },
+];
+
+function MainTableOfContents() {
+  return (
+    <Reveal
+      as="nav"
+      className="section toc-nav-section"
+      delay={32}
+      aria-labelledby="toc-nav-heading"
+    >
+      <h2 className="section__title" id="toc-nav-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          📑
+        </span>{" "}
+        Jump to a section
+      </h2>
+      <p className="section__lead">Tap a stop on the tour and the page will scroll there.</p>
+      <ul className="toc-nav__list">
+        {MAIN_TOC_LINKS.map((item) => (
+          <li key={item.href} className="toc-nav__item">
+            <a className="toc-nav__link" href={item.href}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Reveal>
+  );
+}
 
 function PhotoGallerySection() {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -474,6 +529,196 @@ function TimelineSection() {
           </li>
         ))}
       </ol>
+    </Reveal>
+  );
+}
+
+function May16WorldSection() {
+  const dateLine = `${BIRTH_DAY_SNAPSHOT.weekday}, ${BIRTH_DATE.month} ${BIRTH_DATE.day}, ${BIRTH_DATE.year}`;
+  return (
+    <Reveal
+      as="section"
+      className="section fact-sheet-section"
+      delay={88}
+      aria-labelledby="may16-heading"
+    >
+      <h2 className="section__title" id="may16-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🌍
+        </span>{" "}
+        The world on your birthday
+      </h2>
+      <p className="section__lead">
+        Like those keepsake posters for newborns: a little of what May 16 was up to, and what
+        {BIRTH_DATE.year} felt like when you showed up.
+      </p>
+
+      <div className="fact-sheet__snapshot" role="group" aria-label={`${dateLine} snapshot`}>
+        <p className="fact-sheet__snapshot-date">{dateLine}</p>
+        <ul className="fact-sheet__snapshot-list">
+          <li>
+            <strong>Moon:</strong> {BIRTH_DAY_SNAPSHOT.moonSummary}
+          </li>
+          <li>
+            <strong>#1 single (U.S.):</strong> &ldquo;{BIRTH_DAY_SNAPSHOT.chartTitle}&rdquo; by{" "}
+            {BIRTH_DAY_SNAPSHOT.chartArtist}
+          </li>
+        </ul>
+        <p className="fact-sheet__snapshot-note">{BIRTH_DAY_SNAPSHOT.chartNote}</p>
+        <p className="fact-sheet__snapshot-note fact-sheet__snapshot-note--soft">
+          {BIRTH_DAY_SNAPSHOT.moonDetail}
+        </p>
+      </div>
+
+      <p className="fact-sheet__era">{ERA_SNIPPET}</p>
+
+      <div className="fact-sheet__hubble-wrap">
+        <h3 className="fact-sheet__subhead fact-sheet__subhead--hubble" id="may16-hubble-heading">
+          What Hubble saw on May 16
+        </h3>
+        <p className="fact-sheet__hubble-deck" id="may16-hubble-deck">
+          On May 16 in {HUBBLE_ON_MAY16.observationYear}, this was the view: three galaxies caught in
+          the same frame.
+        </p>
+        <figure
+          className="fact-sheet__hubble"
+          aria-labelledby="may16-hubble-heading"
+          aria-describedby="may16-hubble-deck may16-hubble-caption"
+        >
+          <div className="fact-sheet__hubble-frame">
+            <img
+              className="fact-sheet__hubble-img"
+              src={hubbleHcg90Img}
+              alt="Hubble Space Telescope image of Hickson Compact Group 90: three bright interacting galaxies (NGC 7173 left of center, distorted spiral NGC 7174 upper right, elliptical NGC 7176 lower right) against a field of distant stars and galaxies."
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <figcaption className="fact-sheet__hubble-caption" id="may16-hubble-caption">
+            <strong className="fact-sheet__hubble-title">{HUBBLE_ON_MAY16.title}</strong>
+            <span className="fact-sheet__hubble-body"> {HUBBLE_ON_MAY16.body}</span>
+            <span className="fact-sheet__hubble-credit">Image: {HUBBLE_ON_MAY16.credit}</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <h3 className="fact-sheet__subhead" id="may16-events-heading">
+        This date in history
+      </h3>
+      <ul className="fact-sheet__events" aria-labelledby="may16-events-heading">
+        {ON_THIS_DAY_EVENTS.map((e) => (
+          <li key={e.year} className="fact-sheet__event">
+            <span className="fact-sheet__event-year">{e.year}</span>
+            <span className="fact-sheet__event-text">{e.text}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="fact-sheet__subhead" id="may16-birthdays-heading">
+        Some famous May 16 birthdays
+      </h3>
+      <p className="fact-sheet__birthday-lead" id="may16-birthdays-desc">
+        You share the calendar with:
+      </p>
+      <ul className="fact-sheet__birthdays" aria-describedby="may16-birthdays-desc">
+        {SHARED_BIRTHDAYS.map((p) => (
+          <li key={p.name} className="fact-sheet__birthday-chip">
+            {p.name}{" "}
+            <span className="fact-sheet__birthday-year">({p.year})</span>
+          </li>
+        ))}
+      </ul>
+
+      <p className="fact-sheet__footnote">
+        None of this had to happen for your birthday to matter. It&apos;s just fun context, like
+        tiny footnotes in the margin of the universe.
+      </p>
+    </Reveal>
+  );
+}
+
+function MayBirthSymbolsSection() {
+  const intro = MAY_BIRTH_SYMBOLS_INTRO;
+  return (
+    <Reveal
+      as="section"
+      className="section may-symbols-section"
+      delay={89}
+      aria-labelledby="may-symbols-heading"
+    >
+      <p className="may-symbols__eyebrow">{intro.eyebrow}</p>
+      <h2 className="section__title" id="may-symbols-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🌷
+        </span>{" "}
+        {intro.title}
+      </h2>
+      <p className="section__lead">{intro.lead}</p>
+
+      <ul className="may-symbols__grid" aria-label="May birth symbols and meanings">
+        {MAY_BIRTH_SYMBOLS.map((item) => {
+          const src = MAY_SYMBOL_IMAGE_BY_ID[item.id];
+          return (
+            <li key={item.id} className="may-symbols__card">
+              <div className="may-symbols__media">
+                <div className="may-symbols__thumb-wrap">
+                  {src ? (
+                    <img
+                      className="may-symbols__thumb"
+                      src={src}
+                      alt=""
+                      width={240}
+                      height={240}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="may-symbols__thumb may-symbols__thumb--placeholder" aria-hidden="true" />
+                  )}
+                </div>
+              </div>
+              <div className="may-symbols__body">
+                <span className="may-symbols__kind">{item.kind}</span>
+                <h3 className="may-symbols__name">{item.title}</h3>
+                <p className="may-symbols__text">{item.text}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </Reveal>
+  );
+}
+
+function FloridaManMay16Section() {
+  return (
+    <Reveal
+      as="section"
+      className="section florida-man-section"
+      delay={90}
+      aria-labelledby="florida-man-heading"
+    >
+      <h2 className="section__title" id="florida-man-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🐊
+        </span>{" "}
+        Florida Man, May 16
+      </h2>
+      <p className="section__lead">
+        Headlines that share your birthday on the calendar. Absolutely not your energy, just peak
+        peninsula chaos for the date.
+      </p>
+      <ul className="florida-man__list" aria-label="Florida Man headlines on May 16">
+        {FLORIDA_MAN_MAY16_HEADLINES.map((item, idx) => (
+          <li key={`${item.year}-${idx}`} className="florida-man__card">
+            <span className="florida-man__year">{item.year}</span>
+            <p className="florida-man__headline">{item.headline}</p>
+          </li>
+        ))}
+      </ul>
+      <p className="florida-man__footnote">
+        Curated for laughs. You are not legally responsible for any of this.
+      </p>
     </Reveal>
   );
 }
@@ -746,12 +991,15 @@ function Reveal({ children, className = "", delay = 0, as: Tag = "div" }) {
   );
 }
 
+const FLOATING_DECOR_COUNT = 28;
+
 function FloatingDecor() {
   const items = useMemo(
     () =>
-      Array.from({ length: 20 }, (_, i) => ({
+      Array.from({ length: FLOATING_DECOR_COUNT }, (_, i) => ({
         id: i,
-        left: `${((i * 47) % 92) + 4}%`,
+        /** Even bands across the viewport; translateX(-50%) in CSS centers on this point. */
+        left: `${((i + 0.5) / FLOATING_DECOR_COUNT) * 100}%`,
         delay: `${(i * 0.31) % 6}s`,
         duration: `${7 + (i % 6)}s`,
         size: `${0.85 + (i % 5) * 0.15}rem`,
@@ -865,7 +1113,7 @@ function App() {
               <p className="playlist-gate-ui__sub">
                 After you continue, the player hides so the site stays clean.
                 Tap <strong>Music</strong> (bottom left) anytime to open the
-                full playlist — same player, so your song keeps going.
+                full playlist. Same player, so your song keeps going.
               </p>
             </header>
             <div className="playlist-embed-host__frame">
@@ -910,7 +1158,7 @@ function App() {
           <div
             className={`app app--enter${playlistIntroDone ? " app--with-playlist-dock" : ""}`}
           >
-            <header className="hero">
+            <header className="hero" id="site-hero">
               <div className="hero__ribbon" aria-hidden="true">
                 <span className="hero__ribbon-dot" />
                 <span className="hero__ribbon-dot" />
@@ -954,17 +1202,25 @@ function App() {
                   exactly what I needed to be whole.
                 </blockquote>
                 <figcaption className="hero-quote-card__author">
-                  — Mark Twain
+                  (Mark Twain)
                 </figcaption>
               </figure>
             </header>
 
             <main className="main">
+              <MainTableOfContents />
+
               <WouldYouRatherSection />
 
               <PhotoGallerySection />
 
               <TimelineSection />
+
+              <May16WorldSection />
+
+              <MayBirthSymbolsSection />
+
+              <FloridaManMay16Section />
 
               <ThinkOfYouGridSection />
 
@@ -973,18 +1229,38 @@ function App() {
                 className="section section--footer"
                 delay={100}
               >
-                <footer className="footer">
+                <footer className="footer" id="site-footer">
                   <p className="footer__line">
                     Made with love and a lot of pink CSS just for you.
                   </p>
-                  <dl className="footer__stats" aria-label="Project stats">
-                    {PROJECT_STATS.map((stat) => (
+                  <dl className="footer__stats" aria-label="Tech specs">
+                    {TECH_SPECS.map((stat) => (
                       <div className="footer__stat" key={stat.label}>
                         <dt className="footer__stat-value">{stat.value}</dt>
                         <dd className="footer__stat-label">{stat.label}</dd>
                       </div>
                     ))}
                   </dl>
+                  <p className="footer__github-wrap">
+                    <a
+                      className="footer__github"
+                      href={SOURCE_REPO_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="View this site’s source code on GitHub (opens in a new tab)"
+                    >
+                      <svg
+                        className="footer__github-icon"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.92 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                      </svg>
+                      Want to see what the code looks like?
+                    </a>
+                  </p>
                   <p className="footer__hearts" aria-hidden="true">
                     <span>♡</span>
                     <span>♡</span>
@@ -998,7 +1274,7 @@ function App() {
                 className="section section--closing-signature"
                 delay={120}
               >
-                <div className="closing-signature" aria-label="Closing message">
+                <div className="closing-signature" id="closing-signature" aria-label="Closing message">
                   <p className="closing-signature__headline">
                     Happy Birthday, Cassidy <span aria-hidden="true">💕</span>
                   </p>

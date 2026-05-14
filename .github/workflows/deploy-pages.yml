@@ -49,8 +49,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_SPOTIFY_CLIENT_ID: ${{ secrets.VITE_SPOTIFY_CLIENT_ID }}
-          VITE_SPOTIFY_PLAYLIST_ID: ${{ secrets.VITE_SPOTIFY_PLAYLIST_ID }}
+          VITE_SITE_ACCESS_HASH: ${{ secrets.VITE_SITE_ACCESS_HASH }}
+          VITE_SITE_ACCESS_QUESTION: ${{ secrets.VITE_SITE_ACCESS_QUESTION }}
 
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
