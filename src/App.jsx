@@ -25,12 +25,12 @@ import { FLORIDA_MAN_MAY16_HEADLINES } from "./floridaManMay16Data.js";
 import { MAY_BIRTH_SYMBOLS, MAY_BIRTH_SYMBOLS_INTRO, MAY_SYMBOL_IMAGE_BY_ID } from "./mayBirthSymbolsData.js";
 import "./App.css";
 
-/** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
+/** Replace with your full letter, or edit the default in `OpeningSequence.jsx`. */
 const LETTER_TO_CASSIDY = DEFAULT_LETTER_MESSAGE;
 
 /**
  * Would-you-rather prompts. `question` shows at the top; `a` / `b` are the two answers.
- * `pickForHer` is what *you* guessed she’d choose (`'a'` or `'b'`) — edit anytime.
+ * `pickForHer` is what *you* guessed she’d choose (`'a'` or `'b'`); edit anytime.
  */
 const WYR_QUESTIONS = [
   {
@@ -154,7 +154,7 @@ const WYR_QUESTIONS = [
   },
 ];
 
-/** Photo carousel — swap `caption` / `alt` strings for your real memories. */
+/** Photo carousel: swap `caption` / `alt` strings for your real memories. */
 const GALLERY_SLIDES = [
   {
     src: galleryImg6446,
@@ -505,7 +505,7 @@ function May16WorldSection() {
         The world on your birthday
       </h2>
       <p className="section__lead">
-        Like those keepsake posters for newborns — a little of what May 16 was up to, and what
+        Like those keepsake posters for newborns: a little of what May 16 was up to, and what
         {BIRTH_DATE.year} felt like when you showed up.
       </p>
 
@@ -513,10 +513,10 @@ function May16WorldSection() {
         <p className="fact-sheet__snapshot-date">{dateLine}</p>
         <ul className="fact-sheet__snapshot-list">
           <li>
-            <strong>Moon</strong> — {BIRTH_DAY_SNAPSHOT.moonSummary}
+            <strong>Moon:</strong> {BIRTH_DAY_SNAPSHOT.moonSummary}
           </li>
           <li>
-            <strong>#1 single (U.S.)</strong> — &ldquo;{BIRTH_DAY_SNAPSHOT.chartTitle}&rdquo; by{" "}
+            <strong>#1 single (U.S.):</strong> &ldquo;{BIRTH_DAY_SNAPSHOT.chartTitle}&rdquo; by{" "}
             {BIRTH_DAY_SNAPSHOT.chartArtist}
           </li>
         </ul>
@@ -533,7 +533,7 @@ function May16WorldSection() {
           What Hubble saw on May 16
         </h3>
         <p className="fact-sheet__hubble-deck" id="may16-hubble-deck">
-          On May 16 in {HUBBLE_ON_MAY16.observationYear}, this was the view — three galaxies caught in
+          On May 16 in {HUBBLE_ON_MAY16.observationYear}, this was the view: three galaxies caught in
           the same frame.
         </p>
         <figure
@@ -545,7 +545,7 @@ function May16WorldSection() {
             <img
               className="fact-sheet__hubble-img"
               src={hubbleHcg90Img}
-              alt="Hubble Space Telescope image of Hickson Compact Group 90: three bright interacting galaxies — NGC 7173 left of center, distorted spiral NGC 7174 upper right, and elliptical NGC 7176 lower right — against a field of distant stars and galaxies."
+              alt="Hubble Space Telescope image of Hickson Compact Group 90: three bright interacting galaxies (NGC 7173 left of center, distorted spiral NGC 7174 upper right, elliptical NGC 7176 lower right) against a field of distant stars and galaxies."
               loading="lazy"
               decoding="async"
             />
@@ -586,7 +586,7 @@ function May16WorldSection() {
       </ul>
 
       <p className="fact-sheet__footnote">
-        None of this had to happen for your birthday to matter — it&apos;s just fun context, like
+        None of this had to happen for your birthday to matter. It&apos;s just fun context, like
         tiny footnotes in the margin of the universe.
       </p>
     </Reveal>
@@ -661,7 +661,7 @@ function FloridaManMay16Section() {
         Florida Man, May 16
       </h2>
       <p className="section__lead">
-        Headlines that share your birthday on the calendar — absolutely not your energy, just peak
+        Headlines that share your birthday on the calendar. Absolutely not your energy, just peak
         peninsula chaos for the date.
       </p>
       <ul className="florida-man__list" aria-label="Florida Man headlines on May 16">
@@ -673,7 +673,7 @@ function FloridaManMay16Section() {
         ))}
       </ul>
       <p className="florida-man__footnote">
-        Curated for laughs — you are not legally responsible for any of this.
+        Curated for laughs. You are not legally responsible for any of this.
       </p>
     </Reveal>
   );
@@ -1066,7 +1066,7 @@ function App() {
               <p className="playlist-gate-ui__sub">
                 After you continue, the player hides so the site stays clean.
                 Tap <strong>Music</strong> (bottom left) anytime to open the
-                full playlist — same player, so your song keeps going.
+                full playlist. Same player, so your song keeps going.
               </p>
             </header>
             <div className="playlist-embed-host__frame">
@@ -1155,7 +1155,7 @@ function App() {
                   exactly what I needed to be whole.
                 </blockquote>
                 <figcaption className="hero-quote-card__author">
-                  — Mark Twain
+                  (Mark Twain)
                 </figcaption>
               </figure>
             </header>

@@ -29,7 +29,7 @@ export const MAY_SYMBOL_IMAGE_BY_ID = Object.freeze({
 export const MAY_BIRTH_SYMBOLS_INTRO = Object.freeze({
   eyebrow: "May & you",
   title: "What May lays at your feet",
-  lead: "Birthstone, flowers, and a few things people quietly associate with this time of year — all yours, nothing to unlock.",
+  lead: "Birthstone, flowers, and a few things people quietly associate with this time of year. All yours, nothing to unlock.",
 });
 
 /** @type {readonly { id: string; kind: string; title: string; text: string }[]} */
@@ -38,13 +38,13 @@ export const MAY_BIRTH_SYMBOLS = Object.freeze([
     id: "emerald",
     kind: "Birthstone",
     title: "Emerald",
-    text: "May’s stone is deep green emerald — the color of shade under leaves, old gardens, and staying vivid year after year.",
+    text: "May’s stone is deep green emerald: the color of shade under leaves, old gardens, and staying vivid year after year.",
   },
   {
     id: "lily-of-the-valley",
     kind: "Birth flower",
     title: "Lily of the valley",
-    text: "Tiny white bells on one arching stem — shy-looking, stubbornly sweet, and the unofficial scent of “spring finally decided to show up.”",
+    text: "Tiny white bells on one arching stem, shy-looking, stubbornly sweet, and the unofficial scent of “spring finally decided to show up.”",
   },
   {
     id: "hawthorn",
@@ -56,7 +56,7 @@ export const MAY_BIRTH_SYMBOLS = Object.freeze([
     id: "taurus",
     kind: "Zodiac",
     title: "Sun in Taurus",
-    text: "A May 16 birthday sits in Taurus season — steady warmth, loyalty that doesn’t need a speech, and a serious respect for comfort done right.",
+    text: "A May 16 birthday sits in Taurus season: steady warmth, loyalty that doesn’t need a speech, and a serious respect for comfort done right.",
   },
   {
     id: "earth",
@@ -68,24 +68,24 @@ export const MAY_BIRTH_SYMBOLS = Object.freeze([
     id: "venus",
     kind: "Ruling planet",
     title: "Venus",
-    text: "Taurus answers to Venus — eye for beauty, ear for music, and full permission to care a lot about how a day should feel, not just how it looks on paper.",
+    text: "Taurus answers to Venus: eye for beauty, ear for music, and full permission to care a lot about how a day should feel, not just how it looks on paper.",
   },
   {
     id: "greens",
     kind: "Color",
     title: "Greens of every shade",
-    text: "Emerald’s family runs from moss to sea-glass — May’s whole palette is the world remembering how to be green again.",
+    text: "Emerald’s family runs from moss to sea-glass. May’s whole palette is the world remembering how to be green again.",
   },
   {
     id: "evenings",
     kind: "Moon & evenings",
     title: "Longer nights, softer light",
-    text: "By mid-May the evenings stretch — porch weather, car windows down, and small routines that belong only to this part of the year.",
+    text: "By mid-May the evenings stretch: porch weather, car windows down, and small routines that belong only to this part of the year.",
   },
   {
     id: "may",
     kind: "The month",
     title: "May itself",
-    text: "Birdsong turned up, jackets left in the car, and the sense that the year has finally tipped toward summer — your birthday sits right in that hinge.",
+    text: "Birdsong turned up, jackets left in the car, and the sense that the year has finally tipped toward summer. Your birthday sits right in that hinge.",
   },
 ]);

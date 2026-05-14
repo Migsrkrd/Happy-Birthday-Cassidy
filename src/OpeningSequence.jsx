@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import './OpeningSequence.css'
 
 /**
- * Long letter — replace with your real message (paragraphs welcome).
+ * Long letter: replace with your real message (paragraphs welcome).
  */
 export const DEFAULT_LETTER_MESSAGE = `Cassidy,
 
@@ -18,7 +18,7 @@ I love you more than words can say.
 
 Happy Birthday baby.
 
-— Your Stag`
+Your Stag`
 
 /** Deterministic PRNG for stable balloon layout per id */
 function mulberry32(seed) {

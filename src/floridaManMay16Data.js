@@ -1,6 +1,6 @@
 /**
  * Curated “Florida Man” headlines tied to May 16 (various years).
- * Edit or add rows anytime — keep `year` as a number for sorting/display.
+ * Edit or add rows anytime. Keep `year` as a number for sorting/display.
  */
 export const FLORIDA_MAN_MAY16_HEADLINES = Object.freeze([
   {

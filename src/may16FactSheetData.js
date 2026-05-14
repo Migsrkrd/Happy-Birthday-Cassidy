@@ -1,4 +1,4 @@
-/** Cassidy’s birth date — facts are “May 16” on the calendar + 1997 snapshot where noted. */
+/** Cassidy’s birth date: facts are “May 16” on the calendar plus a 1997 snapshot where noted. */
 
 export const BIRTH_DATE = Object.freeze({
   month: "May",
@@ -10,7 +10,7 @@ export const BIRTH_DAY_SNAPSHOT = Object.freeze({
   /** Calendar day of the week in the birth year (US locale). */
   weekday: "Friday",
   moonSummary:
-    "Waxing gibbous — past first quarter, brightening night after night toward full.",
+    "Waxing gibbous, past first quarter, brightening night after night toward full.",
   moonDetail:
     "Moon phase calendars usually put this night around two-thirds illuminated; the Full Moon came a few nights later.",
   chartTitle: "Hypnotize",
@@ -35,7 +35,7 @@ export const ON_THIS_DAY_EVENTS = Object.freeze([
   },
   {
     year: 1986,
-    text: "Top Gun opened wide in U.S. theaters — beach volleyball, fighter jets, and borrowed sunglasses.",
+    text: "Top Gun opened wide in U.S. theaters: beach volleyball, fighter jets, and borrowed sunglasses.",
   },
 ]);
 
@@ -57,7 +57,7 @@ export const ERA_SNIPPET =
 export const HUBBLE_ON_MAY16 = Object.freeze({
   observationYear: 2006,
   title: "Hickson Compact Group 90",
-  body: "These three galaxies — NGC 7173 (middle left), NGC 7174 (middle right), and NGC 7176 (lower right) — are part of Hickson Compact Group 90, named after astronomer Paul Hickson, who cataloged small groups of galaxies like this one.",
+  body: "These three galaxies, NGC 7173 (middle left), NGC 7174 (middle right), and NGC 7176 (lower right), are part of Hickson Compact Group 90, named after astronomer Paul Hickson, who cataloged small groups of galaxies like this one.",
   /** Image credit for the bundled Hubble frame (typical STScI attribution). */
   credit: "NASA, ESA, and R. Sharples (University of Durham)",
 });

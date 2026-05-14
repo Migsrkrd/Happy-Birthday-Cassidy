@@ -64,7 +64,7 @@ export default function SiteGate({ children }) {
       <div className="site-gate__card">
         <p className="site-gate__eyebrow">Just for you</p>
         <h1 className="site-gate__title">{question}</h1>
-        <p className="site-gate__hint">Type your answer — capitalization doesn&apos;t matter.</p>
+        <p className="site-gate__hint">Type your answer. Capitalization doesn&apos;t matter.</p>
         <form
           className="site-gate__form"
           onSubmit={(e) => {
@@ -102,7 +102,7 @@ export default function SiteGate({ children }) {
           </div>
           {error ? (
             <p className="site-gate__err" role="alert">
-              Not quite — try again.
+              Not quite. Try again.
             </p>
           ) : null}
           <button type="submit" className="site-gate__submit">

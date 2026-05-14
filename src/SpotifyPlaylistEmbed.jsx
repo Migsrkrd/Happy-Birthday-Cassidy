@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from 'react'
 
-/** Playlist shown in the embed — keep in sync with Spotify embed settings. */
+/** Playlist shown in the embed; keep in sync with Spotify embed settings. */
 export const SPOTIFY_PLAYLIST_URI = 'spotify:playlist:7sk1bP2E57vvoH2fqUQ5VA'
 
 const IFRAME_API_SRC = 'https://open.spotify.com/embed/iframe-api/v1'
