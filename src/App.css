@@ -768,6 +768,145 @@
   margin-inline: auto;
 }
 
+/* ---- May birth symbols (Cassidy / May) ---- */
+.may-symbols-section {
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.may-symbols__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(190, 28, 115, 0.72);
+}
+
+.may-symbols__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr));
+  gap: 1.1rem;
+  align-items: stretch;
+}
+
+.may-symbols__card {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 1.05rem;
+  border: 1px solid rgba(255, 170, 210, 0.48);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 240, 248, 0.88) 100%);
+  box-shadow: 0 12px 32px rgba(173, 52, 113, 0.11);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.may-symbols__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(173, 52, 113, 0.15);
+  border-color: rgba(255, 130, 180, 0.55);
+}
+
+.may-symbols__media {
+  position: relative;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  width: 100%;
+  background: radial-gradient(circle at 40% 35%, rgba(255, 236, 248, 0.9), rgba(248, 232, 255, 0.45));
+}
+
+.may-symbols__thumb-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.may-symbols__thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: cover;
+  border: none;
+  box-shadow: none;
+}
+
+.may-symbols__thumb--placeholder {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 230, 246, 0.95) 0%,
+    rgba(220, 210, 255, 0.55) 50%,
+    rgba(255, 236, 220, 0.75) 100%
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 180, 210, 0.35);
+}
+
+.may-symbols__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem 1.2rem;
+  min-height: 0;
+  border-top: 1px solid rgba(255, 190, 215, 0.42);
+}
+
+.may-symbols__kind {
+  align-self: flex-start;
+  margin: 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5f183e;
+  background: rgba(255, 228, 240, 0.95);
+  border: 1px solid rgba(255, 160, 200, 0.42);
+}
+
+.may-symbols__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.02rem, 2.4vw, 1.12rem);
+  line-height: 1.28;
+  color: var(--rose-deep);
+  letter-spacing: 0.01em;
+}
+
+.may-symbols__text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.58;
+  font-weight: 600;
+  color: rgba(92, 41, 66, 0.86);
+}
+
+@media (min-width: 48rem) {
+  .may-symbols__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.15rem 1.25rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .may-symbols__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 /* ---- Florida Man, May 16 ---- */
 .florida-man-section {
   max-width: 46rem;

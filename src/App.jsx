@@ -22,6 +22,7 @@ import {
 } from "./may16FactSheetData.js";
 import hubbleHcg90Img from "./assets/hubble-hickson-compact-group-90.png";
 import { FLORIDA_MAN_MAY16_HEADLINES } from "./floridaManMay16Data.js";
+import { MAY_BIRTH_SYMBOLS, MAY_BIRTH_SYMBOLS_INTRO, MAY_SYMBOL_IMAGE_BY_ID } from "./mayBirthSymbolsData.js";
 import "./App.css";
 
 /** Replace with your full letter — or edit the default in `OpeningSequence.jsx`. */
@@ -592,6 +593,59 @@ function May16WorldSection() {
   );
 }
 
+function MayBirthSymbolsSection() {
+  const intro = MAY_BIRTH_SYMBOLS_INTRO;
+  return (
+    <Reveal
+      as="section"
+      className="section may-symbols-section"
+      delay={89}
+      aria-labelledby="may-symbols-heading"
+    >
+      <p className="may-symbols__eyebrow">{intro.eyebrow}</p>
+      <h2 className="section__title" id="may-symbols-heading">
+        <span className="section__title-icon" aria-hidden="true">
+          🌷
+        </span>{" "}
+        {intro.title}
+      </h2>
+      <p className="section__lead">{intro.lead}</p>
+
+      <ul className="may-symbols__grid" aria-label="May birth symbols and meanings">
+        {MAY_BIRTH_SYMBOLS.map((item) => {
+          const src = MAY_SYMBOL_IMAGE_BY_ID[item.id];
+          return (
+            <li key={item.id} className="may-symbols__card">
+              <div className="may-symbols__media">
+                <div className="may-symbols__thumb-wrap">
+                  {src ? (
+                    <img
+                      className="may-symbols__thumb"
+                      src={src}
+                      alt=""
+                      width={240}
+                      height={240}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="may-symbols__thumb may-symbols__thumb--placeholder" aria-hidden="true" />
+                  )}
+                </div>
+              </div>
+              <div className="may-symbols__body">
+                <span className="may-symbols__kind">{item.kind}</span>
+                <h3 className="may-symbols__name">{item.title}</h3>
+                <p className="may-symbols__text">{item.text}</p>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </Reveal>
+  );
+}
+
 function FloridaManMay16Section() {
   return (
     <Reveal
@@ -1114,6 +1168,8 @@ function App() {
               <TimelineSection />
 
               <May16WorldSection />
+
+              <MayBirthSymbolsSection />
 
               <FloridaManMay16Section />
 
