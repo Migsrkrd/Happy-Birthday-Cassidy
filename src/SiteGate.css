@@ -33,15 +33,17 @@
   font-family: var(--font-display, system-ui, sans-serif);
   font-size: clamp(1.25rem, 4vw, 1.45rem);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.28;
   color: #fff5fb;
+  text-wrap: balance;
 }
 
 .site-gate__hint {
   margin: 0 0 1.1rem;
   font-size: 0.92rem;
-  line-height: 1.45;
+  line-height: 1.5;
   color: rgba(255, 230, 245, 0.78);
+  text-wrap: pretty;
 }
 
 .site-gate__form {

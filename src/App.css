@@ -124,8 +124,9 @@
 .hero {
   position: relative;
   text-align: center;
-  padding: clamp(2.5rem, 6vw, 5rem) 1.25rem 2.5rem;
-  max-width: 52rem;
+  padding: clamp(2.5rem, 6vw, 5rem) var(--page-gutter) clamp(2.25rem, 5vw, 3rem);
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -225,9 +226,10 @@
   font-weight: 600;
   font-size: clamp(1.05rem, 2.4vw, 1.25rem);
   color: var(--text-soft);
-  max-width: 28em;
-  margin: 0 auto 1.75rem;
-  line-height: 1.5;
+  max-width: min(28em, 100%);
+  margin: 0 auto clamp(1.5rem, 4vw, 1.85rem);
+  line-height: 1.55;
+  text-wrap: pretty;
   animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -414,13 +416,15 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 5vw, 3.5rem);
-  padding: 0 1.25rem 4rem;
-  max-width: 72rem;
+  gap: var(--section-gap);
+  padding: 0 var(--page-gutter) clamp(3.5rem, 8vw, 5.25rem);
+  max-width: var(--content-max);
+  width: 100%;
   margin: 0 auto;
 }
 
 .section {
+  width: 100%;
   transition: transform 0.5s ease;
 }
 
@@ -431,9 +435,10 @@
   color: var(--rose-deep);
   margin: 0 0 0.5rem;
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.45rem;
   flex-wrap: wrap;
+  text-wrap: balance;
   transition:
     color 0.4s ease,
     letter-spacing 0.45s ease,
@@ -441,13 +446,15 @@
 }
 
 .section__title:hover {
-  letter-spacing: 0.03em;
-  transform: translateX(4px);
+  letter-spacing: 0.02em;
+  transform: translateX(2px);
   color: var(--pink-700);
 }
 
 .section__title-icon {
   display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 0.12em;
   transition: transform 0.4s ease;
 }
 
@@ -467,19 +474,21 @@
 .section__lead {
   font-weight: 600;
   color: var(--text-soft);
-  margin: 0 0 1.5rem;
-  max-width: 36em;
-  transition: color 0.35s ease, transform 0.35s ease;
+  margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+  max-width: min(var(--read-max), 100%);
+  line-height: 1.58;
+  text-wrap: pretty;
+  transition: color 0.35s ease;
 }
 
 .section:hover .section__lead {
   color: var(--text);
-  transform: translateX(2px);
 }
 
 /* ---- Timeline ---- */
 .timeline-section {
-  max-width: 52rem;
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -529,30 +538,32 @@
 .timeline-list__detail {
   margin: 0;
   padding: 0.85rem 1rem;
-  border-radius: 0.85rem;
-  border: 1px solid rgba(255, 181, 217, 0.55);
+  border-radius: var(--radius-md);
+  border: var(--border-petal);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 236, 247, 0.72));
-  box-shadow: 0 8px 22px rgba(193, 78, 132, 0.14);
+  box-shadow: 0 8px 22px var(--shadow-elevated);
   color: #5c2942;
   font-size: 0.98rem;
-  line-height: 1.55;
+  line-height: 1.58;
+  text-wrap: pretty;
 }
 
 /* ---- May 16 “birth day on Earth” fact sheet ---- */
 .fact-sheet-section {
-  max-width: 46rem;
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
 .fact-sheet__snapshot {
   margin: 0 0 1.25rem;
-  padding: 1rem 1.1rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 170, 210, 0.5);
+  padding: 1.1rem 1.15rem;
+  border-radius: var(--radius-lg);
+  border: var(--border-petal);
   background:
     radial-gradient(circle at 12% 0%, rgba(255, 214, 236, 0.55), transparent 42%),
     linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(255, 232, 246, 0.78));
-  box-shadow: 0 10px 28px rgba(173, 52, 113, 0.12);
+  box-shadow: 0 10px 28px var(--shadow-elevated);
 }
 
 .fact-sheet__snapshot-date {
@@ -699,11 +710,11 @@
   grid-template-columns: auto 1fr;
   gap: 0.65rem 0.85rem;
   align-items: start;
-  padding: 0.75rem 0.95rem;
-  border-radius: 0.85rem;
-  border: 1px solid rgba(255, 181, 217, 0.45);
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  border: var(--border-petal);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(255, 240, 248, 0.65));
-  box-shadow: 0 6px 18px rgba(193, 78, 132, 0.1);
+  box-shadow: 0 8px 22px var(--shadow-elevated);
 }
 
 .fact-sheet__event-year {
@@ -721,8 +732,9 @@
 .fact-sheet__event-text {
   margin: 0;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.58;
   color: #5c2942;
+  text-wrap: pretty;
 }
 
 .fact-sheet__birthday-lead {
@@ -760,17 +772,19 @@
 .fact-sheet__footnote {
   margin: 1.35rem 0 0;
   font-size: 0.9rem;
-  line-height: 1.55;
+  line-height: 1.58;
   color: rgba(92, 41, 66, 0.75);
   font-style: italic;
   text-align: center;
+  text-wrap: pretty;
   max-width: 34em;
   margin-inline: auto;
 }
 
 /* ---- May birth symbols (Cassidy / May) ---- */
 .may-symbols-section {
-  max-width: 56rem;
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -800,10 +814,10 @@
   flex-direction: column;
   padding: 0;
   overflow: hidden;
-  border-radius: 1.05rem;
-  border: 1px solid rgba(255, 170, 210, 0.48);
+  border-radius: var(--radius-lg);
+  border: var(--border-petal);
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 240, 248, 0.88) 100%);
-  box-shadow: 0 12px 32px rgba(173, 52, 113, 0.11);
+  box-shadow: 0 12px 32px var(--shadow-elevated);
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease,
@@ -812,7 +826,7 @@
 
 .may-symbols__card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 18px 40px rgba(173, 52, 113, 0.15);
+  box-shadow: 0 18px 40px rgba(124, 24, 80, 0.14);
   border-color: rgba(255, 130, 180, 0.55);
 }
 
@@ -889,9 +903,10 @@
 .may-symbols__text {
   margin: 0;
   font-size: 0.9rem;
-  line-height: 1.58;
+  line-height: 1.6;
   font-weight: 600;
   color: rgba(92, 41, 66, 0.86);
+  text-wrap: pretty;
 }
 
 @media (min-width: 48rem) {
@@ -909,7 +924,8 @@
 
 /* ---- Florida Man, May 16 ---- */
 .florida-man-section {
-  max-width: 46rem;
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -928,12 +944,12 @@
 
 .florida-man__card {
   margin: 0;
-  padding: 0.85rem 1rem;
-  border-radius: 0.85rem;
-  border: 1px solid rgba(255, 140, 80, 0.38);
+  padding: 0.9rem 1.05rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 155, 115, 0.42);
   background:
     linear-gradient(125deg, rgba(255, 252, 248, 0.98) 0%, rgba(255, 236, 220, 0.55) 100%);
-  box-shadow: 0 8px 22px rgba(180, 90, 40, 0.1);
+  box-shadow: 0 10px 28px var(--shadow-elevated);
 }
 
 .florida-man__year {
@@ -956,16 +972,18 @@
   font-family: var(--font-body);
   font-weight: 700;
   font-size: 0.98rem;
-  line-height: 1.5;
+  line-height: 1.55;
   color: #4a2618;
+  text-wrap: pretty;
 }
 
 .florida-man__footnote {
   margin: 1.1rem 0 0;
   font-size: 0.86rem;
-  line-height: 1.45;
+  line-height: 1.5;
   font-style: italic;
   text-align: center;
+  text-wrap: pretty;
   color: rgba(74, 38, 24, 0.72);
   max-width: 32em;
   margin-inline: auto;
@@ -973,7 +991,8 @@
 
 /* ---- Think of you grid ---- */
 .think-of-you-section {
-  max-width: 56rem;
+  max-width: var(--section-max-width);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -1464,23 +1483,29 @@
 /* ---- Footer ---- */
 .section--footer {
   text-align: center;
+  max-width: var(--section-max-width);
+  width: 100%;
+  margin-inline: auto;
 }
 
 .section--closing-signature {
   text-align: center;
+  max-width: var(--section-max-width);
+  width: 100%;
+  margin-inline: auto;
 }
 
 .footer {
-  padding: 2rem 1rem;
-  border-radius: 1.25rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(255, 224, 242, 0.55));
-  border: 2px solid rgba(255, 168, 216, 0.4);
+  padding: clamp(1.75rem, 4vw, 2.25rem) clamp(1rem, 3vw, 1.5rem);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 224, 242, 0.58));
+  border: var(--border-petal-strong);
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .footer:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px var(--shadow-soft);
+  box-shadow: 0 14px 36px var(--shadow-elevated);
 }
 
 .footer__line {
@@ -1488,6 +1513,7 @@
   font-weight: 700;
   color: var(--text-soft);
   margin: 0 0 1.05rem;
+  text-wrap: pretty;
   transition: letter-spacing 0.45s ease, color 0.35s ease;
 }
 
@@ -1506,10 +1532,10 @@
 
 .footer__stat {
   margin: 0;
-  padding: 0.65rem 0.7rem;
-  border-radius: 0.8rem;
-  border: 1px solid rgba(255, 174, 217, 0.5);
-  background: rgba(255, 255, 255, 0.56);
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: var(--border-petal);
+  background: rgba(255, 255, 255, 0.62);
 }
 
 .footer__stat-value {
@@ -1573,14 +1599,14 @@
 
 .closing-signature {
   margin: 0 auto;
-  width: min(36rem, 100%);
+  width: min(var(--section-max-width), 100%);
   padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.2rem, 4vw, 2rem);
-  border-radius: 1.35rem;
-  border: 2px solid rgba(255, 170, 214, 0.48);
+  border-radius: var(--radius-lg);
+  border: var(--border-petal-strong);
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.88), rgba(255, 229, 244, 0.7)),
     linear-gradient(140deg, rgba(255, 255, 255, 0.55), rgba(255, 212, 236, 0.42));
-  box-shadow: 0 14px 36px rgba(173, 52, 113, 0.16);
+  box-shadow: 0 14px 36px var(--shadow-elevated);
 }
 
 .closing-signature__headline {
@@ -1609,6 +1635,12 @@
 }
 
 /* ---- Would you rather ---- */
+.section.wyr {
+  max-width: var(--section-max-width);
+  width: 100%;
+  margin-inline: auto;
+}
+
 .wyr .section__title-icon {
   animation: none;
 }
@@ -1682,13 +1714,14 @@
 
 .wyr__panel {
   position: relative;
-  max-width: 40rem;
+  max-width: min(40rem, 100%);
+  width: 100%;
   margin: 0 auto;
   padding: clamp(1.25rem, 3vw, 1.75rem);
-  border-radius: 1.35rem;
+  border-radius: var(--radius-lg);
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.92), rgba(255, 232, 246, 0.88));
-  border: 2px solid rgba(255, 182, 218, 0.55);
-  box-shadow: 0 10px 36px var(--shadow-soft);
+  border: var(--border-petal-strong);
+  box-shadow: 0 12px 36px var(--shadow-elevated);
 }
 
 .wyr__panel--done {
@@ -1714,9 +1747,10 @@
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.2rem, 3.8vw, 1.45rem);
-  line-height: 1.3;
+  line-height: 1.32;
   color: var(--rose-deep);
   text-align: center;
+  text-wrap: balance;
 }
 
 .wyr__a11y-live {
@@ -1853,18 +1887,25 @@
 }
 
 /* ---- Photo gallery carousel ---- */
+.gallery-carousel-section {
+  width: 100%;
+  max-width: var(--section-max-width);
+  margin-inline: auto;
+}
+
 .gallery-carousel-section .section__title-icon {
   animation: none;
 }
 
 .gallery-carousel {
-  max-width: 40rem;
+  max-width: min(42rem, 100%);
+  width: 100%;
   margin: 0 auto;
-  padding: clamp(1rem, 2.5vw, 1.35rem);
-  border-radius: 1.35rem;
+  padding: clamp(1.05rem, 2.8vw, 1.4rem);
+  border-radius: var(--radius-lg);
   background: linear-gradient(155deg, rgba(255, 255, 255, 0.94), rgba(255, 232, 246, 0.88));
-  border: 2px solid rgba(255, 182, 218, 0.5);
-  box-shadow: 0 10px 36px var(--shadow-soft);
+  border: var(--border-petal-strong);
+  box-shadow: 0 12px 36px var(--shadow-elevated);
   outline: none;
 }
 
@@ -1965,6 +2006,7 @@
   font-family: var(--font-body);
   font-weight: 600;
   font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+  text-wrap: pretty;
   line-height: 1.5;
   color: var(--text);
   max-width: 36rem;
