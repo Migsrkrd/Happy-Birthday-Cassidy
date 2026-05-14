@@ -1,13 +1,9 @@
-# Lint and build on PRs; on push to main, also deploy static site to GitHub Pages.
+# Lint on PRs and pushes; on push to main, build with GitHub Pages env secrets then deploy.
 # Repo settings → Pages → Build and deployment → Source: GitHub Actions.
 #
-# Site passphrase gate (VITE_SITE_ACCESS_HASH / VITE_SITE_ACCESS_QUESTION):
-# The *build* step must receive these as env vars. GitHub only injects them here if they are
-# **repository** Actions secrets (Settings → Secrets and variables → Actions), or org secrets
-# allowed for this repo. Secrets stored only under Settings → Environments → github-pages are
-# NOT available to this job (that environment is only used by the deploy job below), so the
-# live site would ship with an empty hash and no gate. Duplicate env secrets into repository
-# secrets, or split the workflow so the Pages build runs in a job that declares `environment:`.
+# VITE_SITE_ACCESS_* must reach the production Vite build. Repository Actions secrets are
+# available to every job. Secrets stored only under Environments → github-pages are injected
+# only into jobs that declare `environment: github-pages` (the `pages` job below).
 name: Deploy to GitHub Pages
 
 on:
@@ -26,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,30 +36,44 @@ jobs:
 
       - run: npm run lint
 
+      - name: Build (compile check, no gate secrets)
+        if: github.event_name == 'pull_request'
+        run: npm run build
+
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: lint
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
       - name: Set Vite base URL for GitHub Pages
         run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            NAME="${{ github.event.repository.name }}"
-            OWNER="${{ github.repository_owner }}"
-            if [ "$NAME" = "${OWNER}.github.io" ]; then
-              echo "VITE_BASE_URL=/" >> "$GITHUB_ENV"
-            else
-              echo "VITE_BASE_URL=/${NAME}/" >> "$GITHUB_ENV"
-            fi
-          else
+          NAME="${{ github.event.repository.name }}"
+          OWNER="${{ github.repository_owner }}"
+          if [ "$NAME" = "${OWNER}.github.io" ]; then
             echo "VITE_BASE_URL=/" >> "$GITHUB_ENV"
+          else
+            echo "VITE_BASE_URL=/${NAME}/" >> "$GITHUB_ENV"
           fi
 
-      - name: Check site gate env for production build
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Verify site gate hash present
         env:
           VITE_SITE_ACCESS_HASH: ${{ secrets.VITE_SITE_ACCESS_HASH }}
         run: |
           n=${#VITE_SITE_ACCESS_HASH}
           if [ "$n" -ne 64 ]; then
-            echo "::error::VITE_SITE_ACCESS_HASH must be a 64-character SHA-256 hex string at build time (got length $n)."
-            echo "Add it under Settings → Secrets and variables → Actions as a repository secret."
-            echo "If it only exists under Environments → github-pages, duplicate it there: that environment is not attached to the build job, so Vite never sees the hash."
+            echo "::error::VITE_SITE_ACCESS_HASH must be a 64-character SHA-256 hex string (length was $n)."
+            echo "Add it under Settings → Environments → github-pages → Environment secrets, or under Actions repository secrets."
             exit 1
           fi
 
@@ -74,13 +84,12 @@ jobs:
           VITE_SITE_ACCESS_QUESTION: ${{ secrets.VITE_SITE_ACCESS_QUESTION }}
 
       - uses: actions/upload-pages-artifact@v3
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           path: dist
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
+    needs: pages
     runs-on: ubuntu-latest
     environment:
       name: github-pages
